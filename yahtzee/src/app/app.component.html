@@ -1,0 +1,24 @@
+<div> <!-- title box-->
+  <app-header title="Yahtzee"></app-header>
+
+</div>
+<div>
+<div class="cenhor"> <!-- dice box -->
+ <app-die></app-die>
+ <app-die></app-die>
+ <app-die></app-die>
+ <app-die></app-die>
+ <app-die></app-die>
+
+
+</div>
+<div class="spacer"></div>
+
+<div class="center"><app-button text="roll dice" (onClick)="emitRoll()"></app-button></div>
+</div>
+
+<div> <!-- scorecard title box-->
+  <app-header title="Scorecard"> </app-header>
+
+  <app-scorecard></app-scorecard>
+</div>

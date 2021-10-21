@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+h1.center {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 40pt;
+  font-family: -webkit-pictograph;
+}
+
+div.center{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-flow: column;
+  }
+
+
+  div.cenhor{
+    display: flex;
+    justify-content: space-between;
+
+  }
+  div.spacer{
+    height: 25px;
+  }
