@@ -29,6 +29,16 @@ export class ScoreblockComponent implements OnInit {
     if (this.category == "Full House"){
       this.value = 25
     }
+    if (this.category == "Small Straight"){
+      this.value = 30
+    }
+    if (this.category == "Large Straight"){
+      this.value = 40
+    }
+    if (this.category == "Yahtzee"){
+      this.value = 50
+    }
+
   }
 
   checkDie(){

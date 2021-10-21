@@ -9,6 +9,7 @@ import { rollService } from './rollService';
 import { ScoreblockComponent } from './components/scoreblock/scoreblock.component';
 import { ScorecardComponent } from './components/scorecard/scorecard.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,6 +18,7 @@ import { ScorecardComponent } from './components/scorecard/scorecard.component';
     ButtonComponent,
     ScoreblockComponent,
     ScorecardComponent,
+
 
   ],
   imports: [
