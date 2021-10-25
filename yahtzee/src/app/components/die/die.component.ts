@@ -47,7 +47,7 @@ constructor(private _rollService: rollService){
   this._rollService.listen().subscribe((m:any) => {
       //console.log(m);
       if (m =="roll clicked") {this.onFilterClick();}
-      //if (m =="score: 1s") {this.printC()}
+      if (m =="score") {this.sendV(this.value+1)}
 
   })
 }
@@ -57,6 +57,11 @@ onFilterClick() {
   this.roll()
 }
 
+
+sendV(x:any){
+  this._rollService.filter(x);
+
+}
 
   ngOnInit(): void {
   }

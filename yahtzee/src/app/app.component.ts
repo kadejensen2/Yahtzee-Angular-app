@@ -12,6 +12,8 @@ export class AppComponent {
   @Output() rolled: EventEmitter <any> = new EventEmitter()
 
   constructor(private _rollService: rollService){}
+
+
   emitRoll(){ //emit to roll function
     this._rollService.filter('roll clicked');
   }

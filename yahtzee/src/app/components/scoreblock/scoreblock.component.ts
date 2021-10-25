@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { rollService } from 'src/app/rollService';
 
 
 @Component({
@@ -8,16 +9,23 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ScoreblockComponent implements OnInit {
   @Input() name!: string;
-
+  @Output() scored: EventEmitter <any> = new EventEmitter()
+  diceValues= [0,0,0,0,0]
   value:any = null
   signal!: string;
   category! : string;
-  constructor() { }
+  constructor(private _rollService: rollService){
+    this._rollService.listen().subscribe((m:any) => {
+        console.log(m, "in score");
+        if (m ==1){this.diceValues[0]= m}
 
+    })
+  }
 
 
 
   score(x :any){
+    this._rollService.filter('score');
     this.signal = "score: "+x
     this.category = x
     console.log(this.signal)
