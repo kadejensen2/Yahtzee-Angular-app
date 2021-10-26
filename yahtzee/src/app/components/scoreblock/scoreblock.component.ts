@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { rollService } from 'src/app/rollService';
+import { diceValueService } from 'src/app/diceValueService';
+
 
 
 @Component({
@@ -14,16 +15,25 @@ export class ScoreblockComponent implements OnInit {
   value:any = null
   signal!: string;
   category! : string;
-  dice=["1","2","3","4","5"]
-  constructor(private _rollService: rollService){
-    this._rollService.listen().subscribe((m:any) => {
-     if(m in this.dice){
-      for (var _i = 0; _i <this.diceValues.length ; _i++) {
-      this.diceValues[_i] = m}
-     }
+  previousIn=""
+  count=0
+  constructor(private _diceValueService: diceValueService){
+    this._diceValueService.listenDie().subscribe((m:any) => {
+
+
+    // if(this.count%13==0){
+    //   console.log(m, "dice", this.count)}
+    //else{console.log(this.count)}
+
+    if (m=="score"){
+      if(parseInt(m)%parseInt(m)== 0){
+        for (var _i = 0; _i <this.diceValues.length ; _i++) {
+        this.diceValues[_i] = m}
+      }
+    }
       //console.log(_i)}
       //console.log(m);
-        if (m== 1){this.diceValues[0]= m}
+        //if (m%1== 1){this.diceValues[0]= m}
         // if (m== 2){this.diceValues[1]= m}
         // if (m== 3){this.diceValues[2]= m}
         // if (m== 4){this.diceValues[3]= m}
@@ -33,17 +43,17 @@ export class ScoreblockComponent implements OnInit {
           this.printNum()
         }
 
-
+        this.count = this.count +1
     })
   }
 
 
 
   score(x :any){
-    this._rollService.filter('score');
+    //this._diceValueService.filterDie('scoring');
     this.signal = "score: "+x
     this.category = x
-    console.log(this.signal)
+    console.log(this.signal,"score fun")
     this.addPoints()
   }
   printNum(){

@@ -8,7 +8,7 @@ import { ButtonComponent } from './components/button/button.component';
 import { rollService } from './rollService';
 import { ScoreblockComponent } from './components/scoreblock/scoreblock.component';
 import { ScorecardComponent } from './components/scorecard/scorecard.component';
-
+import { diceValueService } from './diceValueService';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,8 @@ import { ScorecardComponent } from './components/scorecard/scorecard.component';
     BrowserModule,
 
   ],
-  providers: [rollService],
+  providers: [rollService,
+              diceValueService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

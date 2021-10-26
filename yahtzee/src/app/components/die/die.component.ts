@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { diceValueService } from 'src/app/diceValueService';
 import { rollService } from 'src/app/rollService';
 
 @Component({
@@ -18,7 +19,7 @@ holding = "No"
   die6="../../../assets/die 6.png"
 dieValues= [this.die1, this.die2, this.die3, this.die4, this.die5, this.die6]
 dieValue = this.dieValues[this.value]
-
+count=0
 
 getRandomInt(min: number, max: number) : number{
 	min = Math.ceil(min);
@@ -39,29 +40,28 @@ roll(){
 }
 
 changeHold(){
-  console.log(this.held)
+  //console.log(this.held)
   this.held = !this.held
   this.holding = (this.held? "Yes":"No" )
 }
-constructor(private _rollService: rollService){
+constructor(private _rollService: rollService,private _diceValueService: diceValueService){
   this._rollService.listen().subscribe((m:any) => {
-      //console.log(m);
-      if (m =="roll clicked") {this.onFilterClick();}
-      if (m =="score") {this.sendV(this.value+1)}
+     // console.log(m=="roll clicked", "die",m)
+      if (m =="roll clicked") {this.onFilterClick()
+        console.log(m, this.count)
+      }
+      else{console.log(m,"in the die comp")}
 
+      this.count= this.count+1
   })
 }
 
 onFilterClick() {
 
   this.roll()
+  this._diceValueService.filterDie(String(this.value+1))
 }
 
-
-sendV(x:any){
-  this._rollService.filter(x);
-
-}
 
   ngOnInit(): void {
   }
