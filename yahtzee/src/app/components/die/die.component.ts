@@ -19,7 +19,7 @@ holding = "No"
   die6="../../../assets/die 6.png"
 dieValues= [this.die1, this.die2, this.die3, this.die4, this.die5, this.die6]
 dieValue = this.dieValues[this.value]
-count=0
+countRolls=0
 
 getRandomInt(min: number, max: number) : number{
 	min = Math.ceil(min);
@@ -47,18 +47,23 @@ changeHold(){
 constructor(private _rollService: rollService,private _diceValueService: diceValueService){
   this._rollService.listen().subscribe((m:any) => {
      // console.log(m=="roll clicked", "die",m)
-      if (m =="roll clicked") {this.onFilterClick()
-        console.log(m, this.count)
+      if ((m =="roll clicked")&&(this.countRolls<=2)) {this.onFilterClick()
+        console.log(m, this.countRolls)
+        this.countRolls++
       }
-      else{console.log(m,"in the die comp")}
+      if (m=="reset"){
+        this.countRolls=0
+      }
+      //else{console.log(m,"in the die comp")}
 
-      this.count= this.count+1
+
   })
 }
 
 onFilterClick() {
 
   this.roll()
+  console.log(this.value+1)
   this._diceValueService.filterDie(String(this.value+1))
 }
 
