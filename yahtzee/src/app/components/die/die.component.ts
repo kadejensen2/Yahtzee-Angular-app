@@ -48,7 +48,7 @@ constructor(private _rollService: rollService,private _diceValueService: diceVal
   this._rollService.listen().subscribe((m:any) => {
      // console.log(m=="roll clicked", "die",m)
       if ((m =="roll clicked")&&(this.countRolls<=2)) {this.onFilterClick()
-        console.log(m, this.countRolls)
+        //console.log(m, this.countRolls)
         this.countRolls++
       }
       if (m=="reset"){
@@ -63,7 +63,7 @@ constructor(private _rollService: rollService,private _diceValueService: diceVal
 onFilterClick() {
 
   this.roll()
-  console.log(this.value+1)
+  //console.log(this.value+1)
   this._diceValueService.filterDie(String(this.value+1))
 }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { diceValueService } from 'src/app/diceValueService';
 import { rollService } from 'src/app/rollService';
 
 @Component({
@@ -8,7 +9,9 @@ import { rollService } from 'src/app/rollService';
 })
 export class ScorecardComponent implements OnInit {
 countRolls=0
-  constructor(private _rollService:rollService) {
+index=0
+diceValues=[0,0,0,0,0]
+  constructor(private _rollService:rollService, private _diceValueService:diceValueService) {
 
     this._rollService.listen().subscribe((m:any) => {
       if ((m =="roll clicked")&&(this.countRolls<=2)) {
@@ -19,7 +22,22 @@ countRolls=0
       }
     })
 
+    this._diceValueService.listenDie().subscribe((m:any) => {
+      if ((parseInt(m)%parseInt(m)==0)) {
+        this.diceValues[this.index%5]=m
+        this.index++
+      }
+      if (m=="s"){
+        this.pri()
+      }
+
+    })
   }
+
+pri(){
+  console.log(this.diceValues)
+}
+
 
   ngOnInit(): void {
   }

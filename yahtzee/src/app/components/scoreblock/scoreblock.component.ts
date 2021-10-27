@@ -19,33 +19,33 @@ export class ScoreblockComponent implements OnInit {
   previousIn=""
   countRolls=0
   constructor(private _diceValueService: diceValueService,private _rollService: rollService){
-    this._diceValueService.listenDie().subscribe((m:any) => {
+    // this._diceValueService.listenDie().subscribe((m:any) => {
 
 
-    // if(this.count%13==0){
-    //   console.log(m, "dice", this.count)}
-    //else{console.log(this.count)}
+    // // if(this.count%13==0){
+    // //   console.log(m, "dice", this.count)}
+    // //else{console.log(this.count)}
 
-    if (m=="score"){
-      if(parseInt(m)%parseInt(m)== 0){
-        for (var _i = 0; _i <this.diceValues.length ; _i++) {
-        this.diceValues[_i] = m}
-      }
-    }
-      //console.log(_i)}
-      //console.log(m);
-        //if (m%1== 1){this.diceValues[0]= m}
-        // if (m== 2){this.diceValues[1]= m}
-        // if (m== 3){this.diceValues[2]= m}
-        // if (m== 4){this.diceValues[3]= m}
-        // if (m== 5){this.diceValues[4]= m}
-        // if (m== 6){this.diceValues[5]= m}
-        if(m=="print"){
-          this.printNum()
-        }
+    // if (m=="score"){
+    //   if(parseInt(m)%parseInt(m)== 0){
+    //     for (var _i = 0; _i <this.diceValues.length ; _i++) {
+    //     this.diceValues[_i] = m}
+    //   }
+    // }
+    //   //console.log(_i)}
+    //   //console.log(m);
+    //     //if (m%1== 1){this.diceValues[0]= m}
+    //     // if (m== 2){this.diceValues[1]= m}
+    //     // if (m== 3){this.diceValues[2]= m}
+    //     // if (m== 4){this.diceValues[3]= m}
+    //     // if (m== 5){this.diceValues[4]= m}
+    //     // if (m== 6){this.diceValues[5]= m}
+    //     if(m=="print"){
+    //       this.printNum()
+    //     }
 
 
-    })
+    // })
 
 
   }
@@ -59,7 +59,7 @@ export class ScoreblockComponent implements OnInit {
     this._rollService.filter("reset")
   }
   printNum(){
-    console.log(this.diceValues)
+    this._diceValueService.filterDie("s")
   }
 
   addPoints(){
