@@ -9,6 +9,7 @@ import { rollService } from 'src/app/rollService';
 })
 export class DieComponent implements OnInit {
 value = 0
+showHold=false
 held = false
 holding = "No"
   die1="../../../assets/die 1.png"
@@ -50,9 +51,13 @@ constructor(private _rollService: rollService,private _diceValueService: diceVal
       if ((m =="roll clicked")&&(this.countRolls<=2)) {this.onFilterClick()
         //console.log(m, this.countRolls)
         this.countRolls++
+        this.showHold=true
       }
       if (m=="reset"){
         this.countRolls=0
+        this.showHold=false
+        this.held=false
+        this.holding="no"
       }
       //else{console.log(m,"in the die comp")}
 

@@ -3,6 +3,6 @@
 <img src={{dieValue}}>
 
 
-<app-button text="Hold Die" (onClick)="changeHold()" ></app-button>
+<app-button text="Hold Die" (onClick)="changeHold()" *ngIf="showHold==true" ></app-button>
 
 </div>
