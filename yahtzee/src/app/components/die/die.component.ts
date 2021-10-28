@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { diceValueService } from 'src/app/diceValueService';
 import { rollService } from 'src/app/rollService';
+import { scoreService } from 'src/app/scoreService';
 
 @Component({
   selector: 'app-die',
@@ -45,7 +46,7 @@ changeHold(){
   this.held = !this.held
   this.holding = (this.held? "Yes":"No" )
 }
-constructor(private _rollService: rollService,private _diceValueService: diceValueService){
+constructor(private _rollService: rollService,private _diceValueService: diceValueService,private _scoreService:scoreService){
   this._rollService.listen().subscribe((m:any) => {
      // console.log(m=="roll clicked", "die",m)
       if ((m =="roll clicked")&&(this.countRolls<=2)) {this.onFilterClick()
@@ -68,8 +69,10 @@ constructor(private _rollService: rollService,private _diceValueService: diceVal
 onFilterClick() {
 
   this.roll()
+
   //console.log(this.value+1)
   this._diceValueService.filterDie(String(this.value+1))
+
 }
 
 
