@@ -15,7 +15,7 @@ export class ScoreblockComponent implements OnInit {
   @Output() scored: EventEmitter <any> = new EventEmitter()
   value:any = null
   category! : string;
-  diceValues=[0,0,0,0,0]
+  diceValues:any =[0,0,0,0,0]
   countRolls=0
   count=0
   index=0
@@ -58,7 +58,7 @@ export class ScoreblockComponent implements OnInit {
 
 
     console.log(x)
-    //this.diceValues=[ 6,5,3,3,3] // use to change dice to values i want to check scoring logic
+    //this.diceValues=[ 3,3,3,3,3] // use to change dice to values i want to check scoring logic
     this.checkDie()
     this._rollService.filter("reset")
 
@@ -206,7 +206,7 @@ export class ScoreblockComponent implements OnInit {
         this.value=0
       }
         break
-      case "3 of a Kind"://returning score as a string
+      case "3 of a Kind":
         let test3=false
         var sum =0
         let val=0
@@ -216,29 +216,22 @@ export class ScoreblockComponent implements OnInit {
           count3=0
           val=this.diceValues[i]
           for(let j =0; j<dice.length;j++){
-            console.log(val,dice[j])
+            //console.log(val,dice[j])
             if(val==dice[j]){
               count3++
             }
           }
-          console.log("final count", count3)
+          //console.log("final count", count3)
           if(count3>=3){
             test3=true
 
           }
         }
 
-
-
-
-    //console.log(val, dice,count3)
-
-
-
         if(test3){
-          console.log(typeof(sum),typeof(dice[1]))
+          //console.log(typeof(sum),typeof(dice[1]))
           for(let i =0; i<  this.diceValues.length; i++){
-            sum += dice[i]
+            sum = sum+(parseInt(dice[i]))
           }
           this.value=sum
         }
@@ -247,22 +240,91 @@ export class ScoreblockComponent implements OnInit {
         }
         break
 
+      case "4 of a Kind":
+        let test4=false
+        var sum4 =0
+        let val4=0
+        let dice4 = this.diceValues
+        let count4=0
+        for(let i=0; i<this.diceValues.length;i++){
+          count4=0
+          val4=this.diceValues[i]
+          for(let j =0; j<dice4.length;j++){
+            //console.log(val4,dice4[j])
+            if(val4==dice4[j]){
+              count4++
+            }
+          }
+          //console.log("final count", count4)
+          if(count4>=4){
+            test4=true
 
-
-
-
-
-
-
-      case "Chance"://returning score as a string
-        for(let i =0; i<  this.diceValues.length; i++){
-          this.value += this.diceValues[i]
+          }
         }
+
+        if(test4){
+          //console.log(typeof(sum4),typeof(dice4[1]))
+          for(let i =0; i<  this.diceValues.length; i++){
+            sum4 = sum4+(parseInt(dice4[i]))
+          }
+          this.value=sum4
+        }
+        else{
+          this.value=0
+        }
+        break
+      case "Full Houses":// currently works like 3ofaKind
+          let testFH=false
+          var sum =0
+          let valFH=0
+          let diceFH = this.diceValues
+          let countFH=0
+          for(let i=0; i<this.diceValues.length;i++){
+            countFH=0
+            valFH=this.diceValues[i]
+            for(let j =0; j<diceFH.length;j++){
+              //console.log(val,dice[j])
+              if(valFH==dice[j]){
+                countFH++
+              }
+            }
+            //console.log("final count", count3)
+            if(countFH>=3){
+              test3=true
+
+            }
+          }
+
+          if(testFH){
+            //console.log(typeof(sum),typeof(dice[1]))
+
+            this.value=25
+          }
+          else{
+            this.value=0
+          }
+          break
+
+
+
+
+
+      case "Chance":
+      var sumC=0
+      let diceC = this.diceValues
+      for(let i =0; i<  this.diceValues.length; i++){
+        sumC = sumC+(parseInt(diceC[i]))
+      }
+      this.value=sumC
         break
       case "Yahtzee":
         if(((this.diceValues[0] ==this.diceValues[1] )&&(this.diceValues[2] ==this.diceValues[3] ))&&
         ((this.diceValues[0] ==this.diceValues[4] )&&(this.diceValues[0] ==this.diceValues[2]))){
         this.value=50
+
+      }
+      else{
+        this.value=0
       }
         break;
 
@@ -271,9 +333,7 @@ export class ScoreblockComponent implements OnInit {
     }
     return true
   }
-  pr(){ //temp
-    console.log(this.diceValues,"in print")
-  }
+
 
   ngOnInit(): void {
   }
