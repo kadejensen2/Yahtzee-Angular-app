@@ -13,14 +13,21 @@ import { scoreService } from 'src/app/scoreService';
 export class ScoreblockComponent implements OnInit {
   @Input() name!: string;
   @Output() scored: EventEmitter <any> = new EventEmitter()
-  diceValues= [0,0,0,0,0]
   value:any = null
   category! : string;
-
+  diceValues=[0,0,0,0,0]
   countRolls=0
   constructor(private _scoreService:scoreService,private _rollService: rollService,private _diceValueService: diceValueService){
     this._scoreService.listenSco().subscribe((m:any) =>{
-      this.score(m)
+      if (parseInt(m)%parseInt(m)==0){
+        for (let i = 0; i <= 5; i++) {
+
+          this.diceValues[i]=m.substring(i,i+1)
+
+        }
+
+      }
+
 
 
 
@@ -32,8 +39,9 @@ export class ScoreblockComponent implements OnInit {
   }
 
   score(x :any){
-    //this._scoreService.filterSco(x);
     this.category = x
+    this._scoreService.filterSco("send dice");
+
     console.log(x)
     if(this.checkDie()){
       this.addPoints()
@@ -41,9 +49,7 @@ export class ScoreblockComponent implements OnInit {
     this._rollService.filter("reset")
 
   }
-  printNum(){
-    this._diceValueService.filterDie("s")
-  }
+
 
   addPoints(){
     if (this.category == "Full House"){
@@ -64,6 +70,9 @@ export class ScoreblockComponent implements OnInit {
   checkDie(){//values: any){
 
     return true
+  }
+  pr(){ //temp
+    console.log(this.diceValues,"in print")
   }
 
   ngOnInit(): void {

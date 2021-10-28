@@ -29,17 +29,17 @@ stringDie: string =""
         this.diceValues[this.index%5]=m
         this.index++
       }
-      if (m=="s"){
-        this.pri()
-      }
+
 
     })
 
 this._scoreService.listenSco().subscribe((m: any)=>{
     if(m=="send dice"){
       for (let i = 0; i < this.diceValues.length; i++) {
-        console.log(this.diceValues[i]);
+        this.stringDie +=this.diceValues[i]
       }
+
+
 
       this._scoreService.filterSco(this.stringDie)
     }
@@ -52,7 +52,8 @@ this._scoreService.listenSco().subscribe((m: any)=>{
 
   }
 
-pri(){
+
+printNum(){
   console.log(this.diceValues)
 }
 
