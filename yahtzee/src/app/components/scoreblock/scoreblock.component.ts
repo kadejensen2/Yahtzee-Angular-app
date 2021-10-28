@@ -41,7 +41,14 @@ export class ScoreblockComponent implements OnInit {
         console.log(this.diceValues)
       }
     })
-
+    this._rollService.listen().subscribe((m:any) => {
+      if ((m =="roll clicked")&&(this.countRolls<=2)) {
+        this.countRolls++
+      }
+      if (m=="reset"){
+        this.countRolls=0
+      }
+    })
 
 
   }
@@ -51,7 +58,7 @@ export class ScoreblockComponent implements OnInit {
 
 
     console.log(x)
-    //this.diceValues=[ 1,1,1,1,1] // use to change dice to values i want to check scoring logic
+    this.diceValues=[ 6,5,4,2,3] // use to change dice to values i want to check scoring logic
     this.checkDie()
     this._rollService.filter("reset")
 
@@ -62,15 +69,8 @@ export class ScoreblockComponent implements OnInit {
     if (this.category == "Full House"){
       this.value = 25
     }
-    if (this.category == "Small Straight"){
-      this.value = 30
-    }
-    if (this.category == "Large Straight"){
-      this.value = 40
-    }
-    if (this.category == "Yahtzee"){
-      this.value = 50
-    }
+
+
 
   }
 
@@ -137,6 +137,75 @@ export class ScoreblockComponent implements OnInit {
         console.log("count of", count)
         this.value=(count*6)
         break;
+      case "Small Straight"://only three ways to get a small straight 1234 , 2345 , 3456
+        let testS=false
+        for (let j=0; j<this.diceValues.length; j++)//Checking for 1,2,3,4
+			if (this.diceValues[j]==2)
+				for (let k=0; k<this.diceValues.length; k++)
+					if (this.diceValues[k]==3)
+						for (let l=0; l<this.diceValues.length; l++)
+							if (this.diceValues[l]==4)
+								for (let m=0; m<this.diceValues.length; m++)
+									if (this.diceValues[m]==1)
+										testS = true;
+		for (let j=0; j<this.diceValues.length; j++)//Checking for 2,3,4,5
+			if (this.diceValues[j]==2)
+				for (let k=0; k<this.diceValues.length; k++)
+					if (this.diceValues[k]==3)
+						for (let l=0; l<this.diceValues.length; l++)
+							if (this.diceValues[l]==4)
+								for (let m=0; m<this.diceValues.length; m++)
+									if (this.diceValues[m]==5)
+										testS = true;
+		for (let j=0; j<this.diceValues.length; j++)//Checking for 3,4,5,6
+			if (this.diceValues[j]==6)
+				for (let k=0; k<this.diceValues.length; k++)
+					if (this.diceValues[k]==3)
+						for (let l=0; l<this.diceValues.length; l++)
+							if (this.diceValues[l]==4)
+								for (let m=0; m<this.diceValues.length; m++)
+									if (this.diceValues[m]==5)
+										testS = true;
+    if(testS){
+      this.value=30
+    }
+    else{
+      this.value=0
+    }
+
+        break
+      case "Large Straight"://only two ways to get a large straight 12345 and 23456
+        let test=false
+      for (let i=0; i<this.diceValues.length; i++)//Checking for 1,2,3,4,5
+          if (this.diceValues[i]==1)
+            for (let j=0; j<this.diceValues.length; j++)
+              if (this.diceValues[j]==2)
+                for (let k=0; k<this.diceValues.length; k++)
+                  if (this.diceValues[k]==3)
+                    for (let l=0; l<this.diceValues.length; l++)
+                      if (this.diceValues[l]==4)
+                        for (let m=0; m<this.diceValues.length; m++)
+                          if (this.diceValues[m]==5)
+                            test = true;
+			for (let i=0; i<this.diceValues.length; i++) //Checking for 2,3,4,5,6
+				if (this.diceValues[i]==6)
+					for (let j=0; j<this.diceValues.length; j++)
+						if (this.diceValues[j]==2)
+							for (let k=0; k<this.diceValues.length; k++)
+								if (this.diceValues[k]==3)
+									for (let l=0; l<this.diceValues.length; l++)
+										if (this.diceValues[l]==4)
+											for (let m=0; m<this.diceValues.length; m++)
+												if (this.diceValues[m]==5)
+													test = true;
+
+      if(test){
+        this.value=40
+      }
+      else{
+        this.value=0
+      }
+        break
       case "Yahtzee":
         if(((this.diceValues[0] ==this.diceValues[1] )&&(this.diceValues[2] ==this.diceValues[3] ))&&
         ((this.diceValues[0] ==this.diceValues[4] )&&(this.diceValues[0] ==this.diceValues[2]))){
@@ -145,7 +214,7 @@ export class ScoreblockComponent implements OnInit {
         break;
 
       default:
-        // code block
+        this.value=0
     }
     return true
   }
