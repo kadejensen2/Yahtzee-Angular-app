@@ -71,9 +71,7 @@ export class ScoreblockComponent implements OnInit {
 
     return true
   }
-  pr(){ //temp
-    console.log(this.diceValues,"in print")
-  }
+
 
   ngOnInit(): void {
   }

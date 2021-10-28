@@ -53,7 +53,7 @@ this._scoreService.listenSco().subscribe((m: any)=>{
   }
 
 
-printNum(){
+printNum(){//temp
   console.log(this.diceValues)
 }
 
