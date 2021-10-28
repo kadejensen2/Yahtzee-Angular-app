@@ -58,7 +58,7 @@ export class ScoreblockComponent implements OnInit {
 
 
     console.log(x)
-    this.diceValues=[ 6,5,4,2,3] // use to change dice to values i want to check scoring logic
+    //this.diceValues=[ 6,5,3,3,3] // use to change dice to values i want to check scoring logic
     this.checkDie()
     this._rollService.filter("reset")
 
@@ -205,6 +205,59 @@ export class ScoreblockComponent implements OnInit {
       else{
         this.value=0
       }
+        break
+      case "3 of a Kind"://returning score as a string
+        let test3=false
+        var sum =0
+        let val=0
+        let dice = this.diceValues
+        let count3=0
+        for(let i=0; i<this.diceValues.length;i++){
+          count3=0
+          val=this.diceValues[i]
+          for(let j =0; j<dice.length;j++){
+            console.log(val,dice[j])
+            if(val==dice[j]){
+              count3++
+            }
+          }
+          console.log("final count", count3)
+          if(count3>=3){
+            test3=true
+
+          }
+        }
+
+
+
+
+    //console.log(val, dice,count3)
+
+
+
+        if(test3){
+          console.log(typeof(sum),typeof(dice[1]))
+          for(let i =0; i<  this.diceValues.length; i++){
+            sum += dice[i]
+          }
+          this.value=sum
+        }
+        else{
+          this.value=0
+        }
+        break
+
+
+
+
+
+
+
+
+      case "Chance"://returning score as a string
+        for(let i =0; i<  this.diceValues.length; i++){
+          this.value += this.diceValues[i]
+        }
         break
       case "Yahtzee":
         if(((this.diceValues[0] ==this.diceValues[1] )&&(this.diceValues[2] ==this.diceValues[3] ))&&
