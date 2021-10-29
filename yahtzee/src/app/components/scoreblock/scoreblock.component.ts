@@ -41,6 +41,9 @@ export class ScoreblockComponent implements OnInit {
         }
         console.log(this.diceValues)
       }
+      if(m=="YHTRUE"){
+        this.yahtzeeUsed=true
+      }
     })
     this._rollService.listen().subscribe((m:any) => {
       if ((m =="roll clicked")&&(this.countRolls<=2)) {
@@ -58,7 +61,7 @@ export class ScoreblockComponent implements OnInit {
     this.category = x
 
     console.log(x)
-    this.diceValues=[ 1,3,3,3,3] // use to change dice to values i want to check scoring logic
+    this.diceValues=[ 3,3,3,3,3] // use to change dice to values i want to check scoring logic
     this.checkDie()
     this._rollService.filter("reset")
 
@@ -170,7 +173,7 @@ export class ScoreblockComponent implements OnInit {
         break
       case "Large Straight"://only two ways to get a large straight 12345 and 23456
         let test=false
-        console.log(this.checkYahtzee,this.yahtzeeUsed,"\n",this.diceValues)
+        console.log(this.checkYahtzee)//,this.yahtzeeUsed,"\n",this.diceValues)
         if((this.checkYahtzee()==true)&&(this.yahtzeeUsed)){test=true}//not working at the moment
         for (let i=0; i<this.diceValues.length; i++)//Checking for 1,2,3,4,5
             if (this.diceValues[i]==1)
@@ -328,8 +331,9 @@ export class ScoreblockComponent implements OnInit {
         break
 
       case "Yahtzee":
+        this._scoreService.filterSco("YHTRUE")
         console.log(this.checkYahtzee(),this.yahtzeeUsed)
-        this.yahtzeeUsed = true
+
         if(this.checkYahtzee()){
           this.value=50
 
