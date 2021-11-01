@@ -200,7 +200,7 @@ export class ScoreblockComponent implements OnInit {
       case "Large Straight"://only two ways to get a large straight 12345 and 23456
         let test=false
         console.log(this.checkYahtzee)//,this.yahtzeeUsed,"\n",this.diceValues)
-        if((this.checkYahtzee()==true)&&(this.used[0])){test=true}
+        if(((this.checkYahtzee()==true)&&(this.used[0]))&&(this.used[this.diceValues[0]])){test=true}
         for (let i=0; i<this.diceValues.length; i++)//Checking for 1,2,3,4,5
             if (this.diceValues[i]==1)
               for (let j=0; j<this.diceValues.length; j++)
@@ -305,7 +305,7 @@ export class ScoreblockComponent implements OnInit {
           let diceFH:any =[]
           let countFH=0
           let indexFH=0
-          if((this.checkYahtzee()==true)&&(this.used[0])){
+          if(((this.checkYahtzee()==true)&&(this.used[0]))&&(this.used[this.diceValues[0]])){
             testFH=true
           }
           for(let i=0; i<this.diceValues.length;i++){
