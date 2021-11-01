@@ -19,7 +19,8 @@ export class ScoreblockComponent implements OnInit {
   countRolls=0
   count=0
   index=0
-  yahtzeeUsed=false
+  used =[false, false, false, false, false, false, false,] //yahtzee index 0, 1s index 1, 2s index 2 ...
+
   constructor(private _scoreService:scoreService,private _rollService: rollService,private _diceValueService: diceValueService){
 
     this._diceValueService.listenDie().subscribe((m:any) => {
@@ -42,7 +43,25 @@ export class ScoreblockComponent implements OnInit {
         console.log(this.diceValues)
       }
       if(m=="YHTRUE"){
-        this.yahtzeeUsed=true
+        this.used[0]=true
+      }
+      if(m=="OneTRUE"){
+        this.used[1]=true
+      }
+      if(m=="TwoTRUE"){
+        this.used[2]=true
+      }
+      if(m=="ThreeTRUE"){
+        this.used[3]=true
+      }
+      if(m=="FourTRUE"){
+        this.used[4]=true
+      }
+      if(m=="FiveTRUE"){
+        this.used[5]=true
+      }
+      if(m=="SixTRUE"){
+        this.used[6]=true
       }
     })
     this._rollService.listen().subscribe((m:any) => {
@@ -64,6 +83,7 @@ export class ScoreblockComponent implements OnInit {
     this.diceValues=[ 3,3,3,3,3] // use to change dice to values i want to check scoring logic
     this.checkDie()
     this._rollService.filter("reset")
+    console.log(this.used)
 
   }
 
@@ -71,6 +91,7 @@ export class ScoreblockComponent implements OnInit {
     let count=0
     switch(this.name) {
       case "1s":
+        this._scoreService.filterSco("OneTRUE")
         count=0
         for (let i = 0; i < this.diceValues.length; i++){
           if(this.diceValues[i]==1){
@@ -81,6 +102,7 @@ export class ScoreblockComponent implements OnInit {
         console.log("count of", count)
         break;
       case "2s":
+        this._scoreService.filterSco("TwoTRUE")
         count=0
         for (let i = 0; i < this.diceValues.length; i++){
           if(this.diceValues[i]==2){
@@ -91,6 +113,7 @@ export class ScoreblockComponent implements OnInit {
         this.value=(count*2)
         break;
       case "3s":
+        this._scoreService.filterSco("ThreeTRUE")
         count=0
         for (let i = 0; i < this.diceValues.length; i++){
           if(this.diceValues[i]==3){
@@ -101,6 +124,7 @@ export class ScoreblockComponent implements OnInit {
         this.value=(count*3)
         break;
       case "4s":
+        this._scoreService.filterSco("FourTRUE")
         count=0
         for (let i = 0; i < this.diceValues.length; i++){
           if(this.diceValues[i]==4){
@@ -111,6 +135,7 @@ export class ScoreblockComponent implements OnInit {
         this.value=(count*4)
         break;
       case "5s":
+        this._scoreService.filterSco("FiveTRUE")
         count=0
         for (let i = 0; i < this.diceValues.length; i++){
           if(this.diceValues[i]==5){
@@ -121,6 +146,7 @@ export class ScoreblockComponent implements OnInit {
         this.value=(count*5)
         break;
       case "6s":
+        this._scoreService.filterSco("SixTRUE")
         count=0
         for (let i = 0; i < this.diceValues.length; i++){
           if(this.diceValues[i]==6){
@@ -160,7 +186,7 @@ export class ScoreblockComponent implements OnInit {
                       if (this.diceValues[m]==5)
                         testS = true;
 
-        if((this.checkYahtzee()==true)&&(this.yahtzeeUsed)){//not working at the moment
+        if(((this.checkYahtzee()==true)&&(this.used[0]))&&(this.used[this.diceValues[0]])){
           testS=true
         }
         if(testS){
@@ -174,7 +200,7 @@ export class ScoreblockComponent implements OnInit {
       case "Large Straight"://only two ways to get a large straight 12345 and 23456
         let test=false
         console.log(this.checkYahtzee)//,this.yahtzeeUsed,"\n",this.diceValues)
-        if((this.checkYahtzee()==true)&&(this.yahtzeeUsed)){test=true}//not working at the moment
+        if((this.checkYahtzee()==true)&&(this.used[0])){test=true}
         for (let i=0; i<this.diceValues.length; i++)//Checking for 1,2,3,4,5
             if (this.diceValues[i]==1)
               for (let j=0; j<this.diceValues.length; j++)
@@ -279,7 +305,7 @@ export class ScoreblockComponent implements OnInit {
           let diceFH:any =[]
           let countFH=0
           let indexFH=0
-          if((this.checkYahtzee()==true)&&(this.yahtzeeUsed)){
+          if((this.checkYahtzee()==true)&&(this.used[0])){
             testFH=true
           }
           for(let i=0; i<this.diceValues.length;i++){
@@ -332,7 +358,7 @@ export class ScoreblockComponent implements OnInit {
 
       case "Yahtzee":
         this._scoreService.filterSco("YHTRUE")
-        console.log(this.checkYahtzee(),this.yahtzeeUsed)
+        console.log(this.checkYahtzee(),this.used[0])
 
         if(this.checkYahtzee()){
           this.value=50

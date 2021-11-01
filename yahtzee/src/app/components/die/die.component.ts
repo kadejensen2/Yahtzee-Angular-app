@@ -58,7 +58,7 @@ constructor(private _rollService: rollService,private _diceValueService: diceVal
         this.countRolls=0
         this.showHold=false
         this.held=false
-        this.holding="no"
+        this.holding="No"
       }
       //else{console.log(m,"in the die comp")}
 
