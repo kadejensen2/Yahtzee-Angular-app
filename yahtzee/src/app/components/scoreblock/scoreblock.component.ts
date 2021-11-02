@@ -103,11 +103,11 @@ export class ScoreblockComponent implements OnInit {
   score(x :any){
     this.category = x
 
-    console.log(x)
+    console.log("Scoring:",x)
     //this.diceValues=[ 3,3,3,3,3] // use to change dice to values to what i want to check scoring logic
     this.checkDie()
     this._rollService.filter("reset")
-    console.log(this.used)
+    //console.log(this.used)
     this._totalScoreService.filterTSco(this.value)
 
   }
@@ -124,7 +124,7 @@ export class ScoreblockComponent implements OnInit {
           }
         }
         this.value=(count*1)
-        console.log("count of", count)
+        console.log(count, "of", this.name)
         break;
       case "2s":
         this._scoreService.filterSco("TwoTRUE")
@@ -134,8 +134,8 @@ export class ScoreblockComponent implements OnInit {
             count++
           }
         }
-        console.log("count of", count)
         this.value=(count*2)
+        console.log(count, "of", this.name)
         break;
       case "3s":
         this._scoreService.filterSco("ThreeTRUE")
@@ -145,8 +145,8 @@ export class ScoreblockComponent implements OnInit {
             count++
           }
         }
-        console.log("count of", count)
         this.value=(count*3)
+        console.log(count, "of", this.name)
         break;
       case "4s":
         this._scoreService.filterSco("FourTRUE")
@@ -156,8 +156,8 @@ export class ScoreblockComponent implements OnInit {
             count++
           }
         }
-        console.log("count of", count)
         this.value=(count*4)
+        console.log(count, "of", this.name)
         break;
       case "5s":
         this._scoreService.filterSco("FiveTRUE")
@@ -167,8 +167,8 @@ export class ScoreblockComponent implements OnInit {
             count++
           }
         }
-        console.log("count of", count)
         this.value=(count*5)
+        console.log(count, "of", this.name)
         break;
       case "6s":
         this._scoreService.filterSco("SixTRUE")
@@ -178,8 +178,8 @@ export class ScoreblockComponent implements OnInit {
             count++
           }
         }
-        console.log("count of", count)
         this.value=(count*6)
+        console.log(count, "of", this.name)
         break;
       case "Small Straight"://only three ways to get a small straight 1234 , 2345 , 3456
         let testS=false
@@ -220,7 +220,7 @@ export class ScoreblockComponent implements OnInit {
         else{
           this.value=0
         }
-
+        console.log( this.name,"is", testS)
         break
       case "Large Straight"://only two ways to get a large straight 12345 and 23456
         let test=false
@@ -255,7 +255,8 @@ export class ScoreblockComponent implements OnInit {
         else{
           this.value=0
         }
-          break
+        console.log( this.name,"is", test)
+        break
       case "3 of a Kind":
         let test3=false
         var sum =0
@@ -266,20 +267,15 @@ export class ScoreblockComponent implements OnInit {
           count3=0
           val=this.diceValues[i]
           for(let j =0; j<dice.length;j++){
-            //console.log(val,dice[j])
             if(val==dice[j]){
               count3++
             }
           }
-          //console.log("final count", count3)
           if(count3>=3){
             test3=true
-
           }
         }
-
         if(test3){
-          //console.log(typeof(sum),typeof(dice[1]))
           for(let i =0; i<  this.diceValues.length; i++){
             sum = sum+(parseInt(dice[i]))
           }
@@ -288,8 +284,8 @@ export class ScoreblockComponent implements OnInit {
         else{
           this.value=0
         }
+        console.log( this.name,"is", test3)
         break
-
       case "4 of a Kind":
         let test4=false
         var sum4 =0
@@ -300,20 +296,15 @@ export class ScoreblockComponent implements OnInit {
           count4=0
           val4=this.diceValues[i]
           for(let j =0; j<dice4.length;j++){
-            //console.log(val4,dice4[j])
             if(val4==dice4[j]){
               count4++
             }
           }
-          //console.log("final count", count4)
           if(count4>=4){
             test4=true
-
           }
         }
-
         if(test4){
-          //console.log(typeof(sum4),typeof(dice4[1]))
           for(let i =0; i<  this.diceValues.length; i++){
             sum4 = sum4+(parseInt(dice4[i]))
           }
@@ -322,56 +313,39 @@ export class ScoreblockComponent implements OnInit {
         else{
           this.value=0
         }
+        console.log( this.name,"is", test4)
         break
       case "Full House":
-          let testFH=false
-
-          let valFH=0
-          let diceFH:any =[]
-          let countFH=0
-          let indexFH=0
-          if(((this.checkYahtzee()==true)&&(this.used[0]))&&(this.used[this.diceValues[0]])){
-            testFH=true
-          }
-          for(let i=0; i<this.diceValues.length;i++){
-            countFH=0
-            indexFH=0
-            diceFH=[]
-            valFH=this.diceValues[i]
-            //console.log("infirst for loop", valFH,this.diceValues[i])
-            for(let j =0; j<this.diceValues.length;j++){
-              //console.log(valFH,this.diceValues[j])
-              if(valFH==this.diceValues[j]){
-                countFH++
-              }
-              else{
-                diceFH[indexFH] = this.diceValues[j]
-                indexFH++
-              }
-              //console.log("not same as val:",valFH,diceFH)
-            if((countFH>=3)&&(diceFH[0]==diceFH[1])){
-              //console.log("Trueeeeeeeeeeeeeeeeee")
-              testFH=true
-
+        let testFH=false
+        let valFH=0
+        let diceFH:any =[]
+        let countFH=0
+        let indexFH=0
+        if(((this.checkYahtzee()==true)&&(this.used[0]))&&(this.used[this.diceValues[0]])){testFH=true}
+        for(let i=0; i<this.diceValues.length;i++){
+          countFH=0
+          indexFH=0
+          diceFH=[]
+          valFH=this.diceValues[i]
+          for(let j =0; j<this.diceValues.length;j++){
+            if(valFH==this.diceValues[j]){
+              countFH++
             }
-            //console.log("final count", count3)
+            else{
+              diceFH[indexFH] = this.diceValues[j]
+              indexFH++
             }
+          if((countFH>=3)&&(diceFH[0]==diceFH[1])){testFH=true}
           }
-
-          if(testFH){
-            //console.log(typeof(sum),typeof(dice[1]))
-
-            this.value=25
-          }
-          else{
-            this.value=0
-          }
-          break
-
-
-
-
-
+        }
+        if(testFH){
+          this.value=25
+        }
+        else{
+          this.value=0
+        }
+        console.log( this.name,"is", testFH)
+        break
       case "Chance":
         var sumC=0
         let diceC = this.diceValues
@@ -380,22 +354,16 @@ export class ScoreblockComponent implements OnInit {
         }
         this.value=sumC
         break
-
       case "Yahtzee":
         this._scoreService.filterSco("YHTRUE")
-        console.log(this.checkYahtzee(),this.used[0])
-
         if(this.checkYahtzee()){
           this.value=50
-
-
         }
         else{
           this.value=0
         }
-
+        console.log( this.name,"is", this.checkYahtzee())
         break;
-
       default:
         this.value=0
     }

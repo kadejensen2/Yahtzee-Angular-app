@@ -18,6 +18,7 @@ export class AppComponent {
 
     this._totalScoreService.listenTSco().subscribe((m: any) => {
       this.totalScore += parseInt(m)
+      console.log("Adding",m,"points to total")
 
     })
 
