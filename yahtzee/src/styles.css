@@ -7,6 +7,14 @@ h1.center {
   font-size: 40pt;
   font-family: -webkit-pictograph;
 }
+div.center.heading{
+  font-size: 16pt;
+  background-color: darkorange;
+  display: flex;
+  justify-content: center;
+  font-family: -webkit-pictograph;
+
+}
 
 div.center{
     display: flex;
@@ -16,11 +24,15 @@ div.center{
   }
 
 
-  div.cenhor{
-    display: flex;
-    justify-content: space-between;
+div.cenhor{
+  display: flex;
+  justify-content: space-between;
 
-  }
-  div.spacer{
-    height: 25px;
-  }
+}
+div.spacer{
+  height: 25px;
+}
+
+
+
+

@@ -2,6 +2,26 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { diceValueService } from 'src/app/diceValueService';
 import { rollService } from 'src/app/rollService';
 import { scoreService } from 'src/app/scoreService';
+import { totalScoreService } from 'src/app/totalScoreService';
+
+
+
+
+
+
+//add console tracking and document in code
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -19,14 +39,14 @@ export class ScoreblockComponent implements OnInit {
   countRolls=0
   count=0
   index=0
-  used =[false, false, false, false, false, false, false,] //yahtzee index 0, 1s index 1, 2s index 2 ...
+  used =[false, false, false, false, false, false, false,] //this list is used to check conditions for the joker yahtzee. Yahtzee index 0, 1s index 1, 2s index 2 ...
 
-  constructor(private _scoreService:scoreService,private _rollService: rollService,private _diceValueService: diceValueService){
+  constructor(private _scoreService:scoreService,private _rollService: rollService,private _diceValueService: diceValueService,private _totalScoreService:totalScoreService){
 
     this._diceValueService.listenDie().subscribe((m:any) => {
-
-      if ((parseInt(m)%parseInt(m)==0)) {// diceValues is updated every roll
-        this.diceValues[this.index%5]=m
+      // diceValues is updated every roll by recieving a signal containing a list of the dice values
+      if ((parseInt(m)%parseInt(m)==0)) {//checking to see if recieved signal is a number
+        this.diceValues[this.index%5]=m //taking the signal and adding the values to a list
         this.index++
         //console.log(this.diceValues)
       }
@@ -34,7 +54,7 @@ export class ScoreblockComponent implements OnInit {
 
 
     this._scoreService.listenSco().subscribe((m:any) =>{
-      if (parseInt(m)%parseInt(m)==0){
+      if (parseInt(m)%parseInt(m)==0){//checking to see if the signal recieved is a number
         for (let i = 0; i <= 4; i++) {
 
           this.diceValues[i]=m.substring(i,i+1)
@@ -42,6 +62,7 @@ export class ScoreblockComponent implements OnInit {
         }
         console.log(this.diceValues)
       }
+      //this if statements are used to help set conditions for the joker yahtzee
       if(m=="YHTRUE"){
         this.used[0]=true
       }
@@ -64,7 +85,10 @@ export class ScoreblockComponent implements OnInit {
         this.used[6]=true
       }
     })
-    this._rollService.listen().subscribe((m:any) => {
+
+
+
+    this._rollService.listen().subscribe((m:any) => {//used to count the rolls to help display correct elements of the scoreblock
       if ((m =="roll clicked")&&(this.countRolls<=2)) {
         this.countRolls++
       }
@@ -80,10 +104,11 @@ export class ScoreblockComponent implements OnInit {
     this.category = x
 
     console.log(x)
-    this.diceValues=[ 3,3,3,3,3] // use to change dice to values i want to check scoring logic
+    //this.diceValues=[ 3,3,3,3,3] // use to change dice to values to what i want to check scoring logic
     this.checkDie()
     this._rollService.filter("reset")
     console.log(this.used)
+    this._totalScoreService.filterTSco(this.value)
 
   }
 

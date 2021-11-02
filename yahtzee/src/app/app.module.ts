@@ -10,6 +10,7 @@ import { ScoreblockComponent } from './components/scoreblock/scoreblock.componen
 import { ScorecardComponent } from './components/scorecard/scorecard.component';
 import { diceValueService } from './diceValueService';
 import { scoreService } from './scoreService';
+import { totalScoreService } from './totalScoreService';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { scoreService } from './scoreService';
   ],
   providers: [rollService,
               diceValueService,
-            scoreService],
+            scoreService,totalScoreService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
