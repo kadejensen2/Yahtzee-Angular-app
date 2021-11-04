@@ -2,6 +2,9 @@
   <app-header title="Yahtzee"></app-header>
   <div class="center">
     <h3>Rules</h3>
+    <h4>If you score more than 63 points on the number section you will earn an extra 35 points.
+      A second Yahtzee can be used as a wild card for any of the categories, given that its number value has already been scored (Ex. a yahtzee of 2s can't be used as a joker if you haven't scored the 2s category yet).
+      Additional Yahtzees will grant you 100 bonus points if you have scored 50 in the Yahtzee category.</h4>
   </div>
 </div>
 <div>
@@ -26,10 +29,10 @@
 
   <app-scorecard></app-scorecard>
   <div>
-    <h3>If you score more than 63 points on the number section you will earn an extra 35 points</h3>
-    <h4 *ngIf="count==6">You scored {{bonusScore}} points</h4>
-    <h4 *ngIf="bonusAwarded && count==6">You have earned enough points and have been awarded 35 bonus points</h4>
-    <h4 *ngIf="!bonusAwarded && count==6">You have not earned enough points to get the 35 bonus points</h4>
+
+    <h3 *ngIf="count==6">You scored {{bonusScore}} points</h3>
+    <h3 *ngIf="bonusAwarded && count==6">You have earned enough points and have been awarded 35 bonus points</h3>
+    <h3 *ngIf="!bonusAwarded && count==6">You have not earned enough points to get the 35 bonus points</h3>
 
 
   </div>
