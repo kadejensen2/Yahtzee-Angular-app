@@ -19,8 +19,16 @@ holding = "No"
   die4="../../../assets/die 4.png"
   die5="../../../assets/die 5.png"
   die6="../../../assets/die 6.png"
+  die1h="../../../assets/die 1 held.png"
+  die2h="../../../assets/die 2 held.png"
+  die3h="../../../assets/die 3 held.png"
+  die4h="../../../assets/die 4 held.png"
+  die5h="../../../assets/die 5 held.png"
+  die6h="../../../assets/die 6 held.png"
 dieValues= [this.die1, this.die2, this.die3, this.die4, this.die5, this.die6]
+dieValues2= [this.die1h, this.die2h, this.die3h, this.die4h, this.die5h, this.die6h]
 diePic = this.dieValues[this.value]
+diePic2 =this.dieValues2[this.value]
 countRolls=0
 
 getRandomInt(min: number, max: number) : number{
@@ -36,6 +44,7 @@ roll(){
   else{
     this.value = this.getRandomInt(0,5)
     this.diePic = this.dieValues[this.value]
+    this.diePic2 =this.dieValues2[this.value]
   }
 }
 

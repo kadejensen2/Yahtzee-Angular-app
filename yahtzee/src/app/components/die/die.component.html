@@ -1,7 +1,7 @@
 <div class="center">
 <p>Holding: {{holding}}</p>
-<img src={{diePic}}>
-
+<img class="round" *ngIf="!held" src={{diePic}}>
+<img class="round" *ngIf="held" src={{diePic2}}>
 
 <app-button text="Hold Die" (onClick)="changeHold()" *ngIf="showHold==true" ></app-button>
 

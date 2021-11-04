@@ -33,6 +33,9 @@ div.spacer{
   height: 25px;
 }
 
+img.round{
+  border-radius: 20px;
+}
 
 
 
