@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { bonusScoreService } from 'src/app/bonusScoreService';
 import { diceValueService } from 'src/app/diceValueService';
 import { rollService } from 'src/app/rollService';
 import { scoreService } from 'src/app/scoreService';
@@ -10,6 +11,8 @@ import { totalScoreService } from 'src/app/totalScoreService';
 
 
 //add console tracking and document in code
+//yahtzee chips when original yahtzee scores and the player rolls another yahtzee they gain a chip each is 100 pts
+//add bonus for top section move the signal to after the setting value
 
 
 
@@ -39,9 +42,11 @@ export class ScoreblockComponent implements OnInit {
   countRolls=0
   count=0
   index=0
+  yahtzeeChips=0
+  yahtzeeValue: any
   used =[false, false, false, false, false, false, false,] //this list is used to check conditions for the joker yahtzee. Yahtzee index 0, 1s index 1, 2s index 2 ...
 
-  constructor(private _scoreService:scoreService,private _rollService: rollService,private _diceValueService: diceValueService,private _totalScoreService:totalScoreService){
+  constructor(private _scoreService:scoreService,private _rollService: rollService,private _diceValueService: diceValueService,private _totalScoreService:totalScoreService,private _bonusScoreService:bonusScoreService){
 
     this._diceValueService.listenDie().subscribe((m:any) => {
       // diceValues is updated every roll by recieving a signal containing a list of the dice values
@@ -62,27 +67,39 @@ export class ScoreblockComponent implements OnInit {
         }
         console.log(this.diceValues)
       }
+      if(m=="check")
+        if(this.checkUsed()){
+          this._bonusScoreService.filterBSco(this.value)
+        }
+
       //this if statements are used to help set conditions for the joker yahtzee
       if(m=="YHTRUE"){
         this.used[0]=true
       }
       if(m=="OneTRUE"){
         this.used[1]=true
+        //this._bonusScoreService.filterBSco(this.value)
       }
       if(m=="TwoTRUE"){
         this.used[2]=true
+        //this._bonusScoreService.filterBSco(this.value)
       }
       if(m=="ThreeTRUE"){
         this.used[3]=true
+        //this._bonusScoreService.filterBSco(this.value)
       }
       if(m=="FourTRUE"){
         this.used[4]=true
+        //this._bonusScoreService.filterBSco(this.value)
+        //console.log("used 4", this.value)
       }
       if(m=="FiveTRUE"){
         this.used[5]=true
+        //this._bonusScoreService.filterBSco(this.value)
       }
       if(m=="SixTRUE"){
         this.used[6]=true
+       // this._bonusScoreService.filterBSco(this.value)
       }
     })
 
@@ -109,14 +126,14 @@ export class ScoreblockComponent implements OnInit {
     this._rollService.filter("reset")
     //console.log(this.used)
     this._totalScoreService.filterTSco(this.value)
-
+    //this.checkYahtzeeChips()
+    this._scoreService.filterSco("check")
   }
 
   checkDie(){
     let count=0
     switch(this.name) {
       case "1s":
-        this._scoreService.filterSco("OneTRUE")
         count=0
         for (let i = 0; i < this.diceValues.length; i++){
           if(this.diceValues[i]==1){
@@ -125,9 +142,9 @@ export class ScoreblockComponent implements OnInit {
         }
         this.value=(count*1)
         console.log(count, "of", this.name)
+        this._scoreService.filterSco("OneTRUE")
         break;
       case "2s":
-        this._scoreService.filterSco("TwoTRUE")
         count=0
         for (let i = 0; i < this.diceValues.length; i++){
           if(this.diceValues[i]==2){
@@ -136,9 +153,9 @@ export class ScoreblockComponent implements OnInit {
         }
         this.value=(count*2)
         console.log(count, "of", this.name)
+        this._scoreService.filterSco("TwoTRUE")
         break;
       case "3s":
-        this._scoreService.filterSco("ThreeTRUE")
         count=0
         for (let i = 0; i < this.diceValues.length; i++){
           if(this.diceValues[i]==3){
@@ -147,9 +164,9 @@ export class ScoreblockComponent implements OnInit {
         }
         this.value=(count*3)
         console.log(count, "of", this.name)
+        this._scoreService.filterSco("ThreeTRUE")
         break;
       case "4s":
-        this._scoreService.filterSco("FourTRUE")
         count=0
         for (let i = 0; i < this.diceValues.length; i++){
           if(this.diceValues[i]==4){
@@ -158,9 +175,9 @@ export class ScoreblockComponent implements OnInit {
         }
         this.value=(count*4)
         console.log(count, "of", this.name)
+        this._scoreService.filterSco("FourTRUE")
         break;
       case "5s":
-        this._scoreService.filterSco("FiveTRUE")
         count=0
         for (let i = 0; i < this.diceValues.length; i++){
           if(this.diceValues[i]==5){
@@ -169,9 +186,9 @@ export class ScoreblockComponent implements OnInit {
         }
         this.value=(count*5)
         console.log(count, "of", this.name)
+        this._scoreService.filterSco("FiveTRUE")
         break;
       case "6s":
-        this._scoreService.filterSco("SixTRUE")
         count=0
         for (let i = 0; i < this.diceValues.length; i++){
           if(this.diceValues[i]==6){
@@ -180,6 +197,7 @@ export class ScoreblockComponent implements OnInit {
         }
         this.value=(count*6)
         console.log(count, "of", this.name)
+        this._scoreService.filterSco("SixTRUE")
         break;
       case "Small Straight"://only three ways to get a small straight 1234 , 2345 , 3456
         let testS=false
@@ -358,6 +376,7 @@ export class ScoreblockComponent implements OnInit {
         this._scoreService.filterSco("YHTRUE")
         if(this.checkYahtzee()){
           this.value=50
+          this.yahtzeeValue=50
         }
         else{
           this.value=0
@@ -375,6 +394,21 @@ checkYahtzee(){
         ((this.diceValues[0] ==this.diceValues[4] )&&(this.diceValues[0] ==this.diceValues[2]))){
           return true
         }
+  else{
+    return false
+  }
+}
+checkYahtzeeChips(){
+  if((this.yahtzeeValue==50)&&(this.checkYahtzee)){
+    this.yahtzeeChips +=1
+  }
+}
+
+
+checkUsed(){
+  if((this.used[1])&&(this.used[2])&&(this.used[3])&&(this.used[4])&&(this.used[5])&&(this.used[6])){
+    return true
+  }
   else{
     return false
   }

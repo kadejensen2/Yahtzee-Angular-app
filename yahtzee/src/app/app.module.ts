@@ -11,6 +11,7 @@ import { ScorecardComponent } from './components/scorecard/scorecard.component';
 import { diceValueService } from './diceValueService';
 import { scoreService } from './scoreService';
 import { totalScoreService } from './totalScoreService';
+import { bonusScoreService } from './bonusScoreService';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { totalScoreService } from './totalScoreService';
   ],
   providers: [rollService,
               diceValueService,
-            scoreService,totalScoreService],
+            scoreService,totalScoreService,bonusScoreService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
