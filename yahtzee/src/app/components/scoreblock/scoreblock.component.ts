@@ -12,7 +12,7 @@ import { totalScoreService } from 'src/app/totalScoreService';
 
 //add console tracking and document in code
 //yahtzee chips when original yahtzee scores and the player rolls another yahtzee they gain a chip each is 100 pts
-//add bonus for top section move the signal to after the setting value
+
 
 
 
@@ -42,7 +42,6 @@ export class ScoreblockComponent implements OnInit {
   countRolls=0
   count=0
   index=0
-  yahtzeeChips=0
   yahtzeeValue: any
   used =[false, false, false, false, false, false, false,] //this list is used to check conditions for the joker yahtzee. Yahtzee index 0, 1s index 1, 2s index 2 ...
 
@@ -67,10 +66,14 @@ export class ScoreblockComponent implements OnInit {
         }
         console.log(this.diceValues)
       }
-      if(m=="check")
-        if(this.checkUsed()){
+      if(m=="checkBonus35")
+        if(this.checkUsedAllNumbers()){
           this._bonusScoreService.filterBSco(this.value)
         }
+      if(m=="checkBonusYahtzee"){
+        if (this.checkBonusYahtzeeChip())
+          this._bonusScoreService.filterBSco("bonusYahtzee")
+      }
 
       //this if statements are used to help set conditions for the joker yahtzee
       if(m=="YHTRUE"){
@@ -78,28 +81,27 @@ export class ScoreblockComponent implements OnInit {
       }
       if(m=="OneTRUE"){
         this.used[1]=true
-        //this._bonusScoreService.filterBSco(this.value)
+
       }
       if(m=="TwoTRUE"){
         this.used[2]=true
-        //this._bonusScoreService.filterBSco(this.value)
+
       }
       if(m=="ThreeTRUE"){
         this.used[3]=true
-        //this._bonusScoreService.filterBSco(this.value)
+
       }
       if(m=="FourTRUE"){
         this.used[4]=true
-        //this._bonusScoreService.filterBSco(this.value)
-        //console.log("used 4", this.value)
+
       }
       if(m=="FiveTRUE"){
         this.used[5]=true
-        //this._bonusScoreService.filterBSco(this.value)
+
       }
       if(m=="SixTRUE"){
         this.used[6]=true
-       // this._bonusScoreService.filterBSco(this.value)
+
       }
     })
 
@@ -113,8 +115,11 @@ export class ScoreblockComponent implements OnInit {
         this.countRolls=0
       }
     })
-
-
+    this._bonusScoreService.listenBSco().subscribe((m:any) =>{
+      if (m=="Yahtzee50"){
+              this.yahtzeeValue=50
+            }
+          })
   }
 
   score(x :any){
@@ -122,12 +127,14 @@ export class ScoreblockComponent implements OnInit {
 
     console.log("Scoring:",x)
     //this.diceValues=[ 3,3,3,3,3] // use to change dice to values to what i want to check scoring logic
+    this._scoreService.filterSco("checkBonusYahtzee")
     this.checkDie()
     this._rollService.filter("reset")
     //console.log(this.used)
     this._totalScoreService.filterTSco(this.value)
     //this.checkYahtzeeChips()
-    this._scoreService.filterSco("check")
+    this._scoreService.filterSco("checkBonus35")
+
   }
 
   checkDie(){
@@ -373,15 +380,16 @@ export class ScoreblockComponent implements OnInit {
         this.value=sumC
         break
       case "Yahtzee":
-        this._scoreService.filterSco("YHTRUE")
+
         if(this.checkYahtzee()){
           this.value=50
-          this.yahtzeeValue=50
+          this._bonusScoreService.filterBSco("Yahtzee50")
         }
         else{
           this.value=0
         }
         console.log( this.name,"is", this.checkYahtzee())
+        this._scoreService.filterSco("YHTRUE")
         break;
       default:
         this.value=0
@@ -398,20 +406,22 @@ checkYahtzee(){
     return false
   }
 }
-checkYahtzeeChips(){
-  if((this.yahtzeeValue==50)&&(this.checkYahtzee)){
-    this.yahtzeeChips +=1
-  }
-}
 
 
-checkUsed(){
+checkUsedAllNumbers(){
   if((this.used[1])&&(this.used[2])&&(this.used[3])&&(this.used[4])&&(this.used[5])&&(this.used[6])){
     return true
   }
   else{
     return false
   }
+}
+
+checkBonusYahtzeeChip(){
+  if ((this.checkYahtzee())&&((this.yahtzeeValue==50)&&(this.used[0]))){
+    return true
+  }
+  else{return false}
 }
 
   ngOnInit(): void {

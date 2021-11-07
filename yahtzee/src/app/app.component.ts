@@ -15,6 +15,7 @@ export class AppComponent {
   bonusScore = 0
   bonusAwarded =false
   count=0
+  bonusYahtzeeTokens=0
   @Output() rolled: EventEmitter <any> = new EventEmitter()
 
   constructor(private _rollService: rollService,private _totalScoreService: totalScoreService,private _bonusScoreService:bonusScoreService){
@@ -26,8 +27,10 @@ export class AppComponent {
 
     })
     this._bonusScoreService.listenBSco().subscribe((m:any) =>{
-
-      console.log("first",m)
+      if (m=="bonusYahtzee"){
+              this.bonusYahtzeeTokens += 1
+            }
+      //console.log("first",m)
       if (((parseInt(m)%parseInt(m)==0)||(parseInt(m)==0))&&(this.count<6)){
         this.bonusScore += parseInt(m)
         console.log("bonus update: ",this.bonusScore,this.count)
@@ -42,7 +45,6 @@ export class AppComponent {
         }
 
     })
-
 
   }
 
