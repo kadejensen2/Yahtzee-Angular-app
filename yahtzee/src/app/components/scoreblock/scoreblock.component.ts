@@ -126,7 +126,7 @@ export class ScoreblockComponent implements OnInit {
     this.category = x
 
     console.log("Scoring:",x)
-    //this.diceValues=[ 3,3,3,3,3] // use to change dice to values to what i want to check scoring logic
+    this.diceValues=[ 3,3,3,3,3] // use to change dice to values to what i want to check scoring logic
     this._scoreService.filterSco("checkBonusYahtzee")
     this.checkDie()
     this._rollService.filter("reset")

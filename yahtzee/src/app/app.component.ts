@@ -14,22 +14,36 @@ export class AppComponent {
   totalScore = 0
   bonusScore = 0
   bonusAwarded =false
+  countRolls=0
   count=0
   bonusYahtzeeTokens=0
+  turn=1
+  chips: any
   @Output() rolled: EventEmitter <any> = new EventEmitter()
+  gameOver= false
 
   constructor(private _rollService: rollService,private _totalScoreService: totalScoreService,private _bonusScoreService:bonusScoreService){
 
+    this._rollService.listen().subscribe((m:any) => {
+      if ((m =="roll clicked")&&(this.countRolls<=2)) {
+        this.countRolls++
+      }
+      if (m=="reset"){
+        this.countRolls=0
+      }
+    })
 
     this._totalScoreService.listenTSco().subscribe((m: any) => {
       this.totalScore += parseInt(m)
       console.log("Adding",m,"points to total")
-
+      this.Turn()
     })
+
     this._bonusScoreService.listenBSco().subscribe((m:any) =>{
       if (m=="bonusYahtzee"){
               this.bonusYahtzeeTokens += 1
             }
+
       //console.log("first",m)
       if (((parseInt(m)%parseInt(m)==0)||(parseInt(m)==0))&&(this.count<6)){
         this.bonusScore += parseInt(m)
@@ -39,13 +53,8 @@ export class AppComponent {
           if(!(this.bonusAwarded)&&(this.bonusScore>=63)){
             this._totalScoreService.filterTSco("35")
             this.bonusAwarded=true}
-
-
-
         }
-
     })
-
   }
 
 
@@ -53,6 +62,14 @@ export class AppComponent {
     this._rollService.filter('roll clicked');
   }
 
+  Turn(){
+    this.turn +=1
+    if (this.turn==14){
+      this.gameOver = true
+      this.chips = this.bonusYahtzeeTokens*100
+      this._totalScoreService.filterTSco((this.chips))
+    }
+  }
 
 
 
