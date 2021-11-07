@@ -24,13 +24,17 @@ div.center{
   }
 
 
-div.cenhor{
+div.diceBox{
   display: flex;
   justify-content: space-between;
 
 }
-div.spacer{
+div.spacer25{
   height: 25px;
+}
+
+div.spacer5{
+  height: 5px;
 }
 
 img.round{

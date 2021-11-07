@@ -249,7 +249,7 @@ export class ScoreblockComponent implements OnInit {
         break
       case "Large Straight"://only two ways to get a large straight 12345 and 23456
         let test=false
-        console.log(this.checkYahtzee)//,this.yahtzeeUsed,"\n",this.diceValues)
+        //console.log(this.checkYahtzee)//,this.yahtzeeUsed,"\n",this.diceValues)
         if(((this.checkYahtzee()==true)&&(this.used[0]))&&(this.used[this.diceValues[0]])){test=true}
         for (let i=0; i<this.diceValues.length; i++)//Checking for 1,2,3,4,5
             if (this.diceValues[i]==1)
