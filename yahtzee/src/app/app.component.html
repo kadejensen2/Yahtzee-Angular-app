@@ -52,12 +52,12 @@
   <div class="spacer25"></div>
     <div *ngIf="!gameOver">
       <div class="leftSide">
-        <h3 *ngIf="count==6||true">You scored {{bonusScore}} points in the number section</h3>
-        <h3 *ngIf="bonusAwarded && count==6||true">You have earned enough points and have been awarded 35 bonus points</h3>
+        <h3 *ngIf="count==6">You scored {{bonusScore}} points in the number section</h3>
+        <h3 *ngIf="bonusAwarded && count==6">You have earned enough points and have been awarded 35 bonus points</h3>
         <h3 *ngIf="!bonusAwarded && count==6">You have not earned enough points to get the 35 bonus points</h3>
       </div>
       <div class="rightSide">
-        <h3 *ngIf="YbonusAwarded||true" >Bonus Yahtzee Chips {{bonusYahtzeeTokens}}</h3>
+        <h3 *ngIf="YbonusAwarded" >Bonus Yahtzee Chips {{bonusYahtzeeTokens}}</h3>
       </div>
     </div>
 
