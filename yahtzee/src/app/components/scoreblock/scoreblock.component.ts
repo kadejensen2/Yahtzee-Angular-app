@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { bonusScoreService } from 'src/app/bonusScoreService';
 import { diceValueService } from 'src/app/diceValueService';
 import { rollService } from 'src/app/rollService';
@@ -35,7 +35,6 @@ import { totalScoreService } from 'src/app/totalScoreService';
 })
 export class ScoreblockComponent implements OnInit {
   @Input() name!: string;
-  @Output() scored: EventEmitter <any> = new EventEmitter()
   value:any = null
   category! : string;
   diceValues:any =[0,0,0,0,0]
@@ -148,7 +147,7 @@ export class ScoreblockComponent implements OnInit {
           }
         }
         this.value=(count*1)
-        console.log(count, "of", this.name)
+        console.log("Sum of",this.name, "equals",this.value)
         this._scoreService.filterSco("OneTRUE")
         break;
       case "2s":
@@ -159,7 +158,7 @@ export class ScoreblockComponent implements OnInit {
           }
         }
         this.value=(count*2)
-        console.log(count, "of", this.name)
+        console.log("Sum of",this.name, "equals",this.value)
         this._scoreService.filterSco("TwoTRUE")
         break;
       case "3s":
@@ -170,7 +169,7 @@ export class ScoreblockComponent implements OnInit {
           }
         }
         this.value=(count*3)
-        console.log(count, "of", this.name)
+        console.log("Sum of",this.name, "equals",this.value)
         this._scoreService.filterSco("ThreeTRUE")
         break;
       case "4s":
@@ -181,7 +180,7 @@ export class ScoreblockComponent implements OnInit {
           }
         }
         this.value=(count*4)
-        console.log(count, "of", this.name)
+        console.log("Sum of",this.name, "equals",this.value)
         this._scoreService.filterSco("FourTRUE")
         break;
       case "5s":
@@ -192,7 +191,7 @@ export class ScoreblockComponent implements OnInit {
           }
         }
         this.value=(count*5)
-        console.log(count, "of", this.name)
+        console.log("Sum of",this.name, "equals",this.value)
         this._scoreService.filterSco("FiveTRUE")
         break;
       case "6s":
@@ -203,7 +202,7 @@ export class ScoreblockComponent implements OnInit {
           }
         }
         this.value=(count*6)
-        console.log(count, "of", this.name)
+        console.log("Sum of",this.name, "equals",this.value)
         this._scoreService.filterSco("SixTRUE")
         break;
       case "Small Straight"://only three ways to get a small straight 1234 , 2345 , 3456
@@ -245,7 +244,7 @@ export class ScoreblockComponent implements OnInit {
         else{
           this.value=0
         }
-        console.log( this.name,"is", testS)
+        console.log( "Conditions for",this.name, testS? "have":"haven't", "been met")
         break
       case "Large Straight"://only two ways to get a large straight 12345 and 23456
         let test=false
@@ -280,7 +279,7 @@ export class ScoreblockComponent implements OnInit {
         else{
           this.value=0
         }
-        console.log( this.name,"is", test)
+        console.log( "Conditions for",this.name, test? "have":"haven't", "been met")
         break
       case "3 of a Kind":
         let test3=false
@@ -309,7 +308,7 @@ export class ScoreblockComponent implements OnInit {
         else{
           this.value=0
         }
-        console.log( this.name,"is", test3)
+        console.log( "Conditions for",this.name, test3? "have":"haven't", "been met")
         break
       case "4 of a Kind":
         let test4=false
@@ -338,7 +337,7 @@ export class ScoreblockComponent implements OnInit {
         else{
           this.value=0
         }
-        console.log( this.name,"is", test4)
+        console.log( "Conditions for",this.name, test4? "have":"haven't", "been met")
         break
       case "Full House":
         let testFH=false
@@ -369,7 +368,7 @@ export class ScoreblockComponent implements OnInit {
         else{
           this.value=0
         }
-        console.log( this.name,"is", testFH)
+        console.log( "Conditions for",this.name, testFH? "have":"haven't", "been met")
         break
       case "Chance":
         var sumC=0
@@ -388,7 +387,7 @@ export class ScoreblockComponent implements OnInit {
         else{
           this.value=0
         }
-        console.log( this.name,"is", this.checkYahtzee())
+        console.log( "Conditions for",this.name, this.checkYahtzee()? "have":"haven't", "been met")
         this._scoreService.filterSco("YHTRUE")
         break;
       default:

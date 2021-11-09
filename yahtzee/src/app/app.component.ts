@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { bonusScoreService } from './bonusScoreService';
 import { rollService } from './rollService';
 import { totalScoreService } from './totalScoreService';
@@ -14,12 +14,12 @@ export class AppComponent {
   totalScore = 0
   bonusScore = 0
   bonusAwarded =false
+  YbonusAwarded =false
   countRolls=0
   count=0
   bonusYahtzeeTokens=0
   turn=1
   chips: any
-  @Output() rolled: EventEmitter <any> = new EventEmitter()
   gameOver= false
 
   constructor(private _rollService: rollService,private _totalScoreService: totalScoreService,private _bonusScoreService:bonusScoreService){
@@ -42,6 +42,7 @@ export class AppComponent {
     this._bonusScoreService.listenBSco().subscribe((m:any) =>{
       if (m=="bonusYahtzee"){
               this.bonusYahtzeeTokens += 1
+              this.YbonusAwarded=true
             }
 
       //console.log("first",m)
@@ -72,6 +73,8 @@ export class AppComponent {
   }
 
 
-
+restart(){
+  window.location.reload()
+}
 
 }

@@ -1,55 +1,72 @@
-<div> <!-- title box and rules-->
-  <app-header title="Yahtzee"></app-header>
+<div class="hundoP">
+  <div> <!-- title box and rules-->
+    <app-header title="Yahtzee"></app-header>
 
-  <div class="center" *ngIf="!gameOver">
-    <div class="spacer5"></div>
-    <app-button text="View Rules"></app-button>
-    <div >
-      <h4>If you score more than 63 points on the number section you will earn an extra 35 points.
-        A second Yahtzee can be used as a wild card for any of the categories, given that its number value has already been scored (Ex. a yahtzee of 2s can't be used as a joker if you haven't scored the 2s category yet).
-        Additional Yahtzees will grant you 100 bonus points if you have scored 50 in the Yahtzee category.</h4>
-    </div>
-    <div>
-      <h3>Turn {{turn}}</h3>
+    <div class="center" *ngIf="!gameOver">
+      <div class="spacer5"></div>
+      <app-button text="View Rules"></app-button>
+      <div >
+        <h4>If you score more than 63 points on the number section you will earn an extra 35 points.
+          A second Yahtzee can be used as a wild card for any of the categories, given that its number value has already been scored (Ex. a yahtzee of 2s can't be used as a joker if you haven't scored the 2s category yet).
+          Additional Yahtzees will grant you 100 bonus points if you have scored 50 in the Yahtzee category.</h4>
+      </div>
+      <div>
+        <h3>Turn {{turn}}</h3>
+      </div>
     </div>
   </div>
-</div>
 
-<div *ngIf="!gameOver">
-  <div class="diceBox"> <!-- dice box -->
-  <app-die></app-die>
-  <app-die></app-die>
-  <app-die></app-die>
-  <app-die></app-die>
-  <app-die></app-die>
+  <div *ngIf="!gameOver">
+    <div class="diceBox"> <!-- dice box -->
+    <app-die></app-die>
+    <app-die></app-die>
+    <app-die></app-die>
+    <app-die></app-die>
+    <app-die></app-die>
+    </div>
+
+    <div class="spacer25"></div>
+
+    <div class="center">
+      <h3 *ngIf="countRolls==3"> You have rolled three times please select a category to score</h3>
+      <app-button *ngIf="countRolls<3" text="Roll" (onClick)="emitRoll()"></app-button>
+    </div>
+  </div>
+
+  <div class="spacer5"></div>
+
+  <div *ngIf="!gameOver"> <!-- scorecard box-->
+    <app-header title="Scorecard"> </app-header>
+
+    <app-scorecard></app-scorecard>
+
   </div>
 
   <div class="spacer25"></div>
+    <div *ngIf="!gameOver">
+      <div class="leftSide">
+        <h3 *ngIf="count==6">You scored {{bonusScore}} points in the number section</h3>
+        <h3 *ngIf="bonusAwarded && count==6">You have earned enough points and have been awarded 35 bonus points</h3>
+        <h3 *ngIf="!bonusAwarded && count==6">You have not earned enough points to get the 35 bonus points</h3>
+      </div>
+      <div class="rightSide">
+        <h3 *ngIf="YbonusAwarded" >Bonus Yahtzee Chips {{bonusYahtzeeTokens}}</h3>
+      </div>
+    </div>
 
-  <div class="center">
-    <h3 *ngIf="countRolls==3"> You have rolled three times please select a category to score</h3>
-    <app-button *ngIf="countRolls<3" text="roll dice" (onClick)="emitRoll()"></app-button>
-  </div>
-</div>
-
-<div class="spacer5"></div>
-
-<div *ngIf="!gameOver"> <!-- scorecard box-->
-  <app-header title="Scorecard"> </app-header>
-  <div>Bonus Yahtzee Chips {{bonusYahtzeeTokens}}</div>
-  <app-scorecard></app-scorecard>
-  <div>
-
-    <h3 *ngIf="count==6">You scored {{bonusScore}} points in the number section</h3>
-    <h3 *ngIf="bonusAwarded && count==6">You have earned enough points and have been awarded 35 bonus points</h3>
-    <h3 *ngIf="!bonusAwarded && count==6">You have not earned enough points to get the 35 bonus points</h3>
-
-
-  </div>
-</div>
+  <div class="spacer25"></div>
 
   <div class="center">
     <h1>Total Score </h1>
     <h1>{{totalScore}}</h1>
   </div>
 
+
+  <div *ngIf="!gameOver" class="across">
+    <div class="perSpace25"></div>
+    <app-button style="width: 50% !important;" text="New Game" (onClick)="restart()"></app-button>
+    <div class="perSpace25"></div>
+
+  </div>
+
+</div>

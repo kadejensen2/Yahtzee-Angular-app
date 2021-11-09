@@ -3,6 +3,6 @@
 <img class="round" *ngIf="!held" src={{diePic}}>
 <img class="round" *ngIf="held" src={{diePic2}}>
 
-<app-button text="Hold Die" (onClick)="changeHold()" *ngIf="showHold==true" ></app-button>
+<app-button *ngIf="(countRolls!=0)&&(countRolls<3)" text="Hold Die" (onClick)="changeHold()"  ></app-button>
 
 </div>
