@@ -7,27 +7,6 @@ import { totalScoreService } from 'src/app/totalScoreService';
 
 
 
-
-
-
-//add console tracking and document in code
-//yahtzee chips when original yahtzee scores and the player rolls another yahtzee they gain a chip each is 100 pts
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @Component({
   selector: 'app-scoreblock',
   templateUrl: './scoreblock.component.html',

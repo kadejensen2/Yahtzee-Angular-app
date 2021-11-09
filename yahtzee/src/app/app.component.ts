@@ -21,6 +21,7 @@ export class AppComponent {
   turn=1
   chips: any
   gameOver= false
+  rules=false
 
   constructor(private _rollService: rollService,private _totalScoreService: totalScoreService,private _bonusScoreService:bonusScoreService){
 
@@ -72,9 +73,12 @@ export class AppComponent {
     }
   }
 
+  Rules(){
+    this.rules=!this.rules
+  }
 
-restart(){
-  window.location.reload()
+  restart(){
+    window.location.reload()
 }
 
 }

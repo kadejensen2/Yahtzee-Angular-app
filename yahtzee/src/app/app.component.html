@@ -1,15 +1,16 @@
-<div class="hundoP">
+
   <div> <!-- title box and rules-->
     <app-header title="Yahtzee"></app-header>
 
     <div class="center" *ngIf="!gameOver">
       <div class="spacer5"></div>
-      <app-button text="View Rules"></app-button>
-      <div >
+      <app-button text="View Rules" (onClick)="Rules()"></app-button>
+      <div *ngIf="rules">
         <h4>If you score more than 63 points on the number section you will earn an extra 35 points.
           A second Yahtzee can be used as a wild card for any of the categories, given that its number value has already been scored (Ex. a yahtzee of 2s can't be used as a joker if you haven't scored the 2s category yet).
           Additional Yahtzees will grant you 100 bonus points if you have scored 50 in the Yahtzee category.</h4>
       </div>
+
       <div>
         <h3>Turn {{turn}}</h3>
       </div>
@@ -17,12 +18,16 @@
   </div>
 
   <div *ngIf="!gameOver">
-    <div class="diceBox"> <!-- dice box -->
-    <app-die></app-die>
-    <app-die></app-die>
-    <app-die></app-die>
-    <app-die></app-die>
-    <app-die></app-die>
+    <div class="across">
+      <div class="perSpace10"></div>
+      <div class="centerF80p"> <!-- dice box -->
+      <app-die></app-die>
+      <app-die></app-die>
+      <app-die></app-die>
+      <app-die></app-die>
+      <app-die></app-die>
+      </div>
+      <div class="perSpace10"></div>
     </div>
 
     <div class="spacer25"></div>
@@ -37,36 +42,38 @@
 
   <div *ngIf="!gameOver"> <!-- scorecard box-->
     <app-header title="Scorecard"> </app-header>
-
+    <div class="center">
+      <h1>Total Score </h1>
+      <h1>{{totalScore}}</h1>
+    </div>
     <app-scorecard></app-scorecard>
-
   </div>
 
   <div class="spacer25"></div>
     <div *ngIf="!gameOver">
       <div class="leftSide">
-        <h3 *ngIf="count==6">You scored {{bonusScore}} points in the number section</h3>
-        <h3 *ngIf="bonusAwarded && count==6">You have earned enough points and have been awarded 35 bonus points</h3>
+        <h3 *ngIf="count==6||true">You scored {{bonusScore}} points in the number section</h3>
+        <h3 *ngIf="bonusAwarded && count==6||true">You have earned enough points and have been awarded 35 bonus points</h3>
         <h3 *ngIf="!bonusAwarded && count==6">You have not earned enough points to get the 35 bonus points</h3>
       </div>
       <div class="rightSide">
-        <h3 *ngIf="YbonusAwarded" >Bonus Yahtzee Chips {{bonusYahtzeeTokens}}</h3>
+        <h3 *ngIf="YbonusAwarded||true" >Bonus Yahtzee Chips {{bonusYahtzeeTokens}}</h3>
       </div>
     </div>
 
   <div class="spacer25"></div>
 
-  <div class="center">
+  <div *ngIf="gameOver" class="center">
     <h1>Total Score </h1>
     <h1>{{totalScore}}</h1>
   </div>
 
 
-  <div *ngIf="!gameOver" class="across">
+  <div *ngIf="gameOver" class="across">
     <div class="perSpace25"></div>
     <app-button style="width: 50% !important;" text="New Game" (onClick)="restart()"></app-button>
     <div class="perSpace25"></div>
 
   </div>
 
-</div>
+

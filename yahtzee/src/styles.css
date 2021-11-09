@@ -7,12 +7,13 @@ h1.center {
   font-size: 40pt;
   font-family: -webkit-pictograph;
 }
-div.center.heading{
+div.heading{
   font-size: 16pt;
-  background-color: darkorange;
+  background-color: #ffdb01;
   display: flex;
   justify-content: center;
   font-family: -webkit-pictograph;
+  max-height: 75px;
 
 }
 
@@ -21,6 +22,13 @@ div.center{
     justify-content: space-around;
     align-items: center;
     flex-flow: column;
+  }
+  div.centerC{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    width: 100%;
   }
 
   div.leftSide{
@@ -35,11 +43,13 @@ div.center{
     flex-flow: column;
   }
 
-div.diceBox{
+div.centerF80p{
   display: flex;
   justify-content: space-between;
-
+  width:80%;
 }
+
+
 div.spacer25{
   height: 25px;
 }
@@ -101,6 +111,14 @@ img.round{
 div.perSpace25{
   width: 25%
 }
+div.perSpace10{
+  width: 10%
+}
+
+div.space45H{
+  height: 45px;
+  font-weight: bold;
+}
 
 div.across{
   display: flex;
@@ -108,5 +126,15 @@ div.across{
 }
 
 div.hundoP{
-  width:100%
+  width:100%;
+  display: flex;
+  flex-flow: row;
+}
+div.sides{
+  width: 10%;
+  background-color: #d1232a;
+}
+
+body{
+  background-color: lightgray;
 }
