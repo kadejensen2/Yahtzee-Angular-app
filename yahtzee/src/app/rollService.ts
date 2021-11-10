@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs';
 
 
 @Injectable()
-export class rollService {
+export class rollService {//service used to pass messages realted to rolling the dice
     private _listners = new Subject<any>();
 
     listen(): Observable<any> {

@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs';
 
 
 @Injectable()
-export class scoreService {
+export class scoreService {//service used to pass messages realted to the scoring options and their availability
     private _listners = new Subject<any>();
 
     listenSco(): Observable<any> {

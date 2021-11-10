@@ -2,9 +2,9 @@
 
 <div class="center">
 
-  <div class="space45H">{{name}}</div>
-  <div><p>{{value}}</p></div>
-  <div><app-button *ngIf=" ((value == null)&&(countRolls>0))" text="Score" (onClick)="score(name)"></app-button></div>
+  <div class="space45H">{{name}}</div><!-- name of category-->
+  <div><p>{{value}}</p></div><!-- score, will appear once category is scored-->
+  <div><app-button *ngIf=" ((value == null)&&(countRolls>0))" text="Score" (onClick)="score(name)"></app-button></div><!--score button, wont appear until the user rolls. Also wont appear if the category is scored -->
 
 
 

@@ -1,91 +1,91 @@
+<div> <!-- title box and rules-->
+  <app-header title="Yahtzee"></app-header>
 
-  <div> <!-- title box and rules-->
-    <app-header title="Yahtzee"></app-header>
-
-    <div class="center" *ngIf="!gameOver">
-      <div class="spacer5"></div>
-      <app-button *ngIf="!rules" text="View Rules" (onClick)="Rules()"></app-button>
-      <app-button *ngIf="rules" text="Hide Rules" (onClick)="Rules()"></app-button>
-      <div *ngIf="rules" class="centerF80p">
-          <h4>At the start of a turn, the player will roll all 5 dice. Then they can then roll some or all of the dice
-            up to two more times, holding on to any dice they’d like to keep and rerolling the rest.
-            The dice can be scored after any of the rolls, but scoring the dice ends the turn.
-            Holding a die after one roll does not prevent if from being rolled again on any subsequent roll.
-            The goal is to try and score as high as you can in one of the thirteen categories shown on their score card.
-            To score the dice, the player selects one of the categories on the scorecard.
-            Each category can be scored only once per game. Categories can be filled in any order.
-            You must score the dice even if it turns out that there are no good categories remaining to score in.
-            Once a category is filled it may not be changed.
-            <h3>Tips</h3>
-            If you score more than 63 points on the number section you will earn an extra 35 points.
-            A second Yahtzee can be used as a wild card for any of the categories, given that its number value has already been scored (Ex. a yahtzee of 2s can't be used as a joker if you haven't scored the 2s category yet).
-            Additional Yahtzees will grant you 100 bonus points if you have scored 50 in the Yahtzee category.
-            Additional rules and conditions for scoring can be found <a href="https://winning-moves.com/images/YAHTZEERULESv2.pdf" target="blank">here.</a>
-          </h4>
-        </div>
-      <div>
-        <h3>Turn {{turn}}</h3>
+  <div class="center" *ngIf="!gameOver"><!-- disappears when the game is over-->
+    <div class="spacer5"></div>
+    <app-button *ngIf="!rules" text="View Rules" (onClick)="Rules()"></app-button><!-- correct button will show up based on rules status-->
+    <app-button *ngIf="rules" text="Hide Rules" (onClick)="Rules()"></app-button><!-- correct button will show up based on rules status-->
+    <div *ngIf="rules" class="centerF80p">
+        <h4>At the start of a turn, you will roll all 5 dice. Then you can roll some or all of the dice
+          up to two more times, holding on to any dice you'd like to keep and rerolling the rest.
+          The dice can be scored after any of the rolls, but scoring the dice ends the turn.
+          Holding a die after one roll does not prevent if from being rolled again on a later roll.
+          The goal is to try and score as high as you can in one of the thirteen categories shown on the score card.
+          To score the dice, you select one of the categories on the scorecard.
+          Each category can be scored only once per game. Categories can be filled in any order.
+          You must score the dice even if it turns out that there are no good categories remaining to score in.
+          Once a category is filled it may not be changed.
+          <h3>Tips</h3>
+          If you score more than 63 points on the number section you will earn an extra 35 points.
+          A second Yahtzee can be used as a joker for any of the categories, given that its number value has already been scored (Ex. a yahtzee of 2s can't be used as a joker if you haven't scored the 2s category yet).
+          Additional Yahtzees will grant you 100 bonus points if you have scored 50 in the Yahtzee category.
+          Additional rules and conditions for scoring can be found <a href="https://winning-moves.com/images/YAHTZEERULESv2.pdf" target="blank">here.</a>
+        </h4>
       </div>
+    <div>
+      <h3>Turn {{turn}}</h3>
     </div>
   </div>
+</div>
 
-  <div *ngIf="!gameOver">
-    <div class="across">
-      <div class="perSpace10"></div>
-      <div class="centerF80p"> <!-- dice box -->
-      <app-die></app-die>
-      <app-die></app-die>
-      <app-die></app-die>
-      <app-die></app-die>
-      <app-die></app-die>
-      </div>
-      <div class="perSpace10"></div>
+<div *ngIf="!gameOver"><!-- Area that holds the dice, disappears when the game is over-->
+  <div class="across">
+    <div class="perSpace10"></div>
+    <div class="centerF80p">
+    <app-die></app-die>
+    <app-die></app-die>
+    <app-die></app-die>
+    <app-die></app-die>
+    <app-die></app-die>
     </div>
-
-    <div class="spacer25"></div>
-
-    <div class="center">
-      <h3 *ngIf="countRolls==3"> You have rolled three times please select a category to score</h3>
-      <app-button *ngIf="countRolls<3" text="Roll" (onClick)="emitRoll()"></app-button>
-    </div>
-  </div>
-
-  <div class="spacer5"></div>
-
-  <div *ngIf="!gameOver"> <!-- scorecard box-->
-    <app-header title="Scorecard"> </app-header>
-    <div class="center">
-      <h1>Total Score </h1>
-      <h1>{{totalScore}}</h1>
-    </div>
-    <app-scorecard></app-scorecard>
+    <div class="perSpace10"></div>
   </div>
 
   <div class="spacer25"></div>
-    <div *ngIf="!gameOver">
-      <div class="leftSide">
-        <h3 *ngIf="count==6">You scored {{bonusScore}} points in the number section</h3>
-        <h3 *ngIf="bonusAwarded && count==6">You have earned enough points and have been awarded 35 bonus points</h3>
-        <h3 *ngIf="!bonusAwarded && count==6">You have not earned enough points to get the 35 bonus points</h3>
-      </div>
-      <div class="rightSide">
-        <h3 *ngIf="YbonusAwarded" >Bonus Yahtzee Chips {{bonusYahtzeeTokens}}</h3>
-      </div>
-    </div>
 
-  <div class="spacer25"></div>
+  <div class="center">
+    <h3 *ngIf="countRolls==3"> You have rolled three times please select a category to score</h3>
+    <app-button *ngIf="countRolls<3" text="Roll" (onClick)="emitRoll()"></app-button><!--roll button-->
+  </div>
+</div>
 
-  <div *ngIf="gameOver" class="center">
+<div class="spacer5"></div>
+
+<div *ngIf="!gameOver"> <!-- Area that holds the scorecard, disappears when the game is over-->
+  <app-header title="Scorecard"> </app-header>
+  <div class="center">
     <h1>Total Score </h1>
     <h1>{{totalScore}}</h1>
   </div>
+  <app-scorecard></app-scorecard>
+</div>
 
+<div class="spacer25"></div>
 
-  <div *ngIf="gameOver" class="across">
-    <div class="perSpace25"></div>
-    <app-button style="width: 50% !important;" text="New Game" (onClick)="restart()"></app-button>
-    <div class="perSpace25"></div>
-
+<div *ngIf="!gameOver"><!-- Area that displays the bonus scoring elements, disappears when the game is over-->
+  <div class="leftSide">
+    <h3 *ngIf="count==6">You scored {{bonusScore}} points in the number section</h3>
+    <h3 *ngIf="bonusAwarded && count==6">You have been awarded 35 bonus points</h3>
+    <h3 *ngIf="!bonusAwarded && count==6">You have not earned enough points to get the 35 bonus points</h3>
   </div>
+  <div class="rightSide">
+    <h3 *ngIf="YbonusAwarded" >Bonus Yahtzee Chips {{bonusYahtzeeTokens}}</h3>
+  </div>
+</div>
+
+<div class="spacer25"></div>
+
+<div *ngIf="gameOver" class="center"><!--appears when the game is finished-->
+  <h1>Total Score </h1>
+  <h1>{{totalScore}}</h1>
+</div>
+
+
+<div *ngIf="gameOver" class="across"><!--appears when the game is finished-->
+  <div class="perSpace25"></div>
+  <app-button style="width: 50% !important;" text="New Game" (onClick)="restart()"></app-button> <!--New Game button-->
+  <div class="perSpace25"></div>
+
+</div>
 
 

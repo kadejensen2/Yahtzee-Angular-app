@@ -25,31 +25,31 @@ export class AppComponent {
 
   constructor(private _rollService: rollService,private _totalScoreService: totalScoreService,private _bonusScoreService:bonusScoreService){
 
-    this._rollService.listen().subscribe((m:any) => {
-      if ((m =="roll clicked")&&(this.countRolls<=2)) {
+    this._rollService.listen().subscribe((message:any) => { // counts rolls
+      if ((message =="roll clicked")&&(this.countRolls<=2)) {
         this.countRolls++
       }
-      if (m=="reset"){
+      if (message=="reset"){
         this.countRolls=0
       }
     })
 
-    this._totalScoreService.listenTSco().subscribe((m: any) => {
-      this.totalScore += parseInt(m)
-      console.log("Adding",m,"points to total")
+    this._totalScoreService.listenTSco().subscribe((message: any) => {// adds points to the total score and increments the turn
+      this.totalScore += parseInt(message)
+      console.log("Adding",message,"points to total")
       this.Turn()
     })
 
-    this._bonusScoreService.listenBSco().subscribe((m:any) =>{
-      if (m=="bonusYahtzee"){
+    this._bonusScoreService.listenBSco().subscribe((message:any) =>{//recieving signals for bonus scoring
+      if (message=="bonusYahtzee"){//adding a bonus chip if award
         console.log("You have earned a Yahtzee chip")
         this.bonusYahtzeeTokens += 1
         this.YbonusAwarded=true
       }
-      if (((parseInt(m)%parseInt(m)==0)||(parseInt(m)==0))&&(this.count<6)){
-        this.bonusScore += parseInt(m)
+      if (((parseInt(message)%parseInt(message)==0)||(parseInt(message)==0))&&(this.count<6)){// adding up the first 6 signals(the number section)
+        this.bonusScore += parseInt(message)
         this.count +=1
-        if(!(this.bonusAwarded)&&(this.bonusScore>=63)){
+        if(!(this.bonusAwarded)&&(this.bonusScore>=63)){//checking if it is over 63 and giving bonus
           this.bonusAwarded=true
           console.log("Total of number section: ",this.bonusScore, "You have scored enough points for the bonus")
           this._totalScoreService.filterTSco("35")
@@ -59,11 +59,11 @@ export class AppComponent {
     })
   }
 
-  emitRoll(){
+  emitRoll(){//sends a message that the roll button was clicked
     this._rollService.filter('roll clicked');
   }
 
-  Turn(){
+  Turn(){// function to increment the turn counter and end the game after turn 13
     this.turn +=1
     if (this.turn==14){
       this.gameOver = true
@@ -73,11 +73,11 @@ export class AppComponent {
     }
   }
 
-  Rules(){
+  Rules(){ //toggles the rules so they can be shown or not
     this.rules=!this.rules
   }
 
-  restart(){
+  restart(){//refesh the page to restart the game
     window.location.reload()
   }
 
