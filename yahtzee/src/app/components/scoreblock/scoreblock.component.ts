@@ -30,20 +30,11 @@ export class ScoreblockComponent implements OnInit {
       if ((parseInt(m)%parseInt(m)==0)) {//checking to see if recieved signal is a number
         this.diceValues[this.index%5]=m //taking the signal and adding the values to a list
         this.index++
-        //console.log(this.diceValues)
       }
     })
 
-
     this._scoreService.listenSco().subscribe((m:any) =>{
-      if (parseInt(m)%parseInt(m)==0){//checking to see if the signal recieved is a number
-        for (let i = 0; i <= 4; i++) {
 
-          this.diceValues[i]=m.substring(i,i+1)
-
-        }
-        console.log(this.diceValues)
-      }
       if(m=="checkBonus35")
         if(this.checkUsedAllNumbers()){
           this._bonusScoreService.filterBSco(this.value)
@@ -214,7 +205,7 @@ export class ScoreblockComponent implements OnInit {
                       if (this.diceValues[m]==5)
                         testS = true;
 
-        if(((this.checkYahtzee()==true)&&(this.used[0]))&&(this.used[this.diceValues[0]])){
+        if(((this.checkYahtzee()==true)&&(this.used[0]))&&(this.used[this.diceValues[0]])){//checking for joker
           testS=true
         }
         if(testS){
@@ -227,8 +218,7 @@ export class ScoreblockComponent implements OnInit {
         break
       case "Large Straight"://only two ways to get a large straight 12345 and 23456
         let test=false
-        //console.log(this.checkYahtzee)//,this.yahtzeeUsed,"\n",this.diceValues)
-        if(((this.checkYahtzee()==true)&&(this.used[0]))&&(this.used[this.diceValues[0]])){test=true}
+
         for (let i=0; i<this.diceValues.length; i++)//Checking for 1,2,3,4,5
             if (this.diceValues[i]==1)
               for (let j=0; j<this.diceValues.length; j++)
@@ -252,6 +242,9 @@ export class ScoreblockComponent implements OnInit {
                           if (this.diceValues[m]==5)
                             test = true;
 
+        if(((this.checkYahtzee()==true)&&(this.used[0]))&&(this.used[this.diceValues[0]])){//checking for joker
+          test=true
+        }
         if(test){
           this.value=40
         }
@@ -324,22 +317,26 @@ export class ScoreblockComponent implements OnInit {
         let diceFH:any =[]
         let countFH=0
         let indexFH=0
-        if(((this.checkYahtzee()==true)&&(this.used[0]))&&(this.used[this.diceValues[0]])){testFH=true}
         for(let i=0; i<this.diceValues.length;i++){
           countFH=0
           indexFH=0
           diceFH=[]
-          valFH=this.diceValues[i]
+          valFH=this.diceValues[i]//selecting a number in the value list
           for(let j =0; j<this.diceValues.length;j++){
-            if(valFH==this.diceValues[j]){
+            if(valFH==this.diceValues[j]){//checking the number against all the numbers in the list
               countFH++
             }
             else{
-              diceFH[indexFH] = this.diceValues[j]
+              diceFH[indexFH] = this.diceValues[j]//puting the numbers that are different in a new list
               indexFH++
             }
-          if((countFH>=3)&&(diceFH[0]==diceFH[1])){testFH=true}
+          if((countFH>=3)&&(diceFH[0]==diceFH[1])){//if a full house there should be three similar values counted and the remaining values in the new list should match
+            testFH=true
           }
+          }
+        }
+        if(((this.checkYahtzee()==true)&&(this.used[0]))&&(this.used[this.diceValues[0]])){//checking for joker
+          testFH=true
         }
         if(testFH){
           this.value=25
@@ -358,7 +355,6 @@ export class ScoreblockComponent implements OnInit {
         this.value=sumC
         break
       case "Yahtzee":
-
         if(this.checkYahtzee()){
           this.value=50
           this._bonusScoreService.filterBSco("Yahtzee50")
@@ -379,7 +375,7 @@ checkYahtzee(){
   if(((this.diceValues[0] ==this.diceValues[1] )&&(this.diceValues[2] ==this.diceValues[3] ))&&
         ((this.diceValues[0] ==this.diceValues[4] )&&(this.diceValues[0] ==this.diceValues[2]))){
           return true
-        }
+  }
   else{
     return false
   }
@@ -399,7 +395,9 @@ checkBonusYahtzeeChip(){
   if ((this.checkYahtzee())&&((this.yahtzeeValue==50)&&(this.used[0]))){
     return true
   }
-  else{return false}
+  else{
+    return false
+  }
 }
 
   ngOnInit(): void {

@@ -1,8 +1,9 @@
 <div class="center">
-<p>Holding: {{holding}}</p>
+
 <img class="round" *ngIf="!held" src={{diePic}}>
 <img class="round" *ngIf="held" src={{diePic2}}>
 
-<app-button *ngIf="(countRolls!=0)&&(countRolls<3)" text="Hold Die" (onClick)="changeHold()"  ></app-button>
+<app-button *ngIf="!(held)&&((countRolls!=0)&&(countRolls<3))" text="Hold Die" (onClick)="changeHold()"  ></app-button>
+<app-button *ngIf="held&&((countRolls!=0)&&(countRolls<3))" text="Release Die" (onClick)="changeHold()"  ></app-button>
 
 </div>

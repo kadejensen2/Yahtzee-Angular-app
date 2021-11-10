@@ -42,25 +42,24 @@ export class AppComponent {
 
     this._bonusScoreService.listenBSco().subscribe((m:any) =>{
       if (m=="bonusYahtzee"){
-              this.bonusYahtzeeTokens += 1
-              this.YbonusAwarded=true
-            }
-
-      //console.log("first",m)
+        console.log("You have earned a Yahtzee chip")
+        this.bonusYahtzeeTokens += 1
+        this.YbonusAwarded=true
+      }
       if (((parseInt(m)%parseInt(m)==0)||(parseInt(m)==0))&&(this.count<6)){
         this.bonusScore += parseInt(m)
-        console.log("bonus update: ",this.bonusScore,this.count)
         this.count +=1
-        //console.log(" in if m=", m)
-          if(!(this.bonusAwarded)&&(this.bonusScore>=63)){
-            this._totalScoreService.filterTSco("35")
-            this.bonusAwarded=true}
+        if(!(this.bonusAwarded)&&(this.bonusScore>=63)){
+          this.bonusAwarded=true
+          console.log("Total of number section: ",this.bonusScore, "You have scored enough points for the bonus")
+          this._totalScoreService.filterTSco("35")
+          this.turn -=1
         }
+      }
     })
   }
 
-
-  emitRoll(){ //emit to roll function
+  emitRoll(){
     this._rollService.filter('roll clicked');
   }
 
@@ -69,6 +68,7 @@ export class AppComponent {
     if (this.turn==14){
       this.gameOver = true
       this.chips = this.bonusYahtzeeTokens*100
+      console.log("You have", this.bonusYahtzeeTokens, "yahtzee chips")
       this._totalScoreService.filterTSco((this.chips))
     }
   }
@@ -79,6 +79,6 @@ export class AppComponent {
 
   restart(){
     window.location.reload()
-}
+  }
 
 }
